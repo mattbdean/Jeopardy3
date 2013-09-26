@@ -1,0 +1,135 @@
+<!-- Taken from http://www.j-archive.com/showgame.php?game_id=3959 -->
+<jeopardy>
+	<column name="Space Firsts">
+		<answerContainer>
+			<answer>On May 20, 1990 its first image, a star cluster in the constellation Carina, was received from space</answer>
+			<question>The Hubble telescope</question>
+		</answerContainer>
+		<answerContainer>
+			<answer>In June 1965 Edward White on Gemini 4 became the first American to do this: it lasted 23 minutes</answer>
+			<question>A spacewalk</question>
+		</answerContainer>
+		<answerContainer>
+			<answer>On Nov. 14, 1971 Mariner 9 became the first spacecraft to go into orbit around another planet, this one</answer>
+			<question>Mars</question>
+		</answerContainer>
+		<answerContainer>
+			<answer>Launched on April 12, 1981, this Space Shuttle was the first reusable manned spacecraft</answer>
+			<question>The Columbia</question>
+		</answerContainer>
+		<answerContainer>
+			<answer>On April 12, 1961 this Russian, the first man in space, said the earth had a "beautiful blue halo"</answer>
+			<question>Gagarin</question>
+		</answerContainer>
+	</column>
+	<column name="The Rise of the Movies">
+		<answerContainer>
+			<answer>A teenage cannibal-in-the-making is featured in the prequel called him "Rising"</answer>
+			<question>Hannibal Lecter</question>
+		</answerContainer>
+		<answerContainer>
+			<answer>&quot;Underworld: Rise of the Lycans&quot; shows the origins of a feud between vampires &amp; these. aka lycans or lycanthropes</answer>
+			<question>Wolfmen (or werewolves)</question>
+		</answerContainer>
+		<answerContainer>
+			<answer>The chimps only get as far as crossing the Golden Gate Bridge in this 2011 film, so maybe the title implies a sequel is in store</answer>
+			<question>Rise of the Planet of the Apes</question>
+		</answerContainer>
+		<answerContainer>
+			<answer>The third movie in this series was subtitled "Rise of the Machines"</answer>
+			<question>Terminator</question>
+		</answerContainer>
+		<answerContainer>
+			<answer>&lt;empty&gt;</answer>
+			<question>&lt;empty&gt;</question>
+		</answerContainer>
+	</column>
+	<column name="What are you Afraid of?">
+		<answerContainer>
+			<answer>Arachnophobia</answer>
+			<question>Spiders</question>
+		</answerContainer>
+		<answerContainer>
+			<answer>Pharmacaphobia</answer>
+			<question>Drugs</question>
+		</answerContainer>
+		<answerContainer>
+			<answer>Chronophobia</answer>
+			<question>Time</question>
+		</answerContainer>
+		<answerContainer>
+			<answer>Nyctophobia</answer>
+			<question>Night</question>
+		</answerContainer>
+		<answerContainer>
+			<answer>Kinesophobia</answer>
+			<question>Movement (or motion)</question>
+		</answerContainer>
+	</column>
+	<column name="Double-Wetter Words">
+		<answerContainer>
+			<answer>For centuries Indian rajahs trained this swift cat to hunt gazelles</answer>
+			<question>Cheetahs</question>
+		</answerContainer>
+		<answerContainer>
+			<answer>This James Bond villain, Goldfinger's henchman, used a razor-sharp bowler hat as a weapon</answer>
+			<question>Oddjob</question>
+		</answerContainer>
+		<answerContainer>
+			<answer>n physics, it means empty space; when you feel like you're working in one, you feel isolated</answer>
+			<question>A vacuum</question>
+		</answerContainer>
+		<answerContainer>
+			<answer>The Germans call Brussels sprouts "Rosenkohl", literally "rose" this</answer>
+			<question>Cabbage</question>
+		</answerContainer>
+		<answerContainer>
+			<answer>These electromagnetic rays have a higher energy &amp; shorter wavelength than X-rays</answer>
+			<question>Gamma rays</question>
+		</answerContainer>
+	</column>
+	<column name="Baby Names">
+		<answerContainer>
+			<answer>Names that work for either a boy or a girl include Payton, Dylan, Skyler &amp; this. like actress Diaz</answer>
+			<question>Cameron</question>
+		</answerContainer>
+		<answerContainer>
+			<answer>Among the most popular twin names for girls are these 2 that form a trio with Charity</answer>
+			<question>Faith and Hope</question>
+		</answerContainer>
+		<answerContainer>
+			<answer>We're not sure why but this name of a New York City borough recently ranked among the top 10 girl's names in Arkansas</answer>
+			<question>Brooklyn</question>
+		</answerContainer>
+		<answerContainer>
+			<answer>For a "first daughter" you might consider this name, a Hawaiian form of Mary</answer>
+			<question>Malia</question>
+		</answerContainer>
+		<answerContainer>
+			<answer>"Hey" this 4-letter masculine name meaning one who praises God--you aren't so obscure anymore</answer>
+			<question>Jude</question>
+		</answerContainer>
+	</column>
+	<column name="Anagrammed 21st Century Leaders">
+		<answerContainer>
+			<answer>Germany: Meaner Gal Elk</answer>
+			<question>Angela Merkel</question>
+		</answerContainer>
+		<answerContainer>
+			<answer>Venezuela: Ez Havoc Hug</answer>
+			<question>Hugo Chavez</question>
+		</answerContainer>
+		<answerContainer>
+			<answer>Italy: Billion Sour Vices</answer>
+			<question>Silvio Berlusconi</question>
+		</answerContainer>
+		<answerContainer>
+			<answer>The United Kingdom: Wrong Orb Nod</answer>
+			<question>Gordon Brown</question>
+		</answerContainer>
+		<answerContainer>
+			<answer>Canada: Sharpen The Rep</answer>
+			<question>Stephen Harper</question>
+		</answerContainer>
+	</column>
+</jeopardy>
