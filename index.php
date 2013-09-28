@@ -23,7 +23,7 @@ function makeGameFor($gameId) {
 	for ($i = 0; $i < $ROW_COUNT; $i++) {
 		echo '<tr>';
 		foreach ($xml->column as $column) {
-			echo '<td width=". ' . 100 / count($xml->column) . '%">$' . (($i + 1) * 100) . '</td>';
+			echo '<td class="jeobutton">$' . (($i + 1) * 100) . '</td>';
 		}
 		echo '</tr>';
 	}
@@ -36,12 +36,20 @@ function makeGameFor($gameId) {
 
 <html>
 <head>
-	<title>Jeopardy 3</title>
+	<title>Classroom Jeopardy</title>
 	<link href='http://fonts.googleapis.com/css?family=Alfa+Slab+One' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Alegreya:700' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="res/font/gyparody/stylesheet.css">
 	<link rel="stylesheet" href="res/styles/index.css">
-
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script>
+	$(document).ready(function() {
+		$(".jeobutton").mouseup(function() {
+			$(this).css('opacity', '0');
+		});
+	});
+	
+	</script>
 </head>
 <body>
 	<div id="content-wrapper">
