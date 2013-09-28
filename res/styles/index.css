@@ -1,18 +1,45 @@
+body {
+	background-color: #d1d1d1;
+}
+
 #content-wrapper {
 	width: 960;
 	margin: 0 auto;
 }
 
 .column {
-	float: left;
 	padding: 0 10px;
+	font-family: "Droid Serif" sans-serif;
+	text-align: center;
+}
+
+#header-text {
+	font-family: "Gyparody" serif;
+	font-size: 60;
+	margin: 20px 0 10px 0;
 }
 
 .column-header {
-	
+	margin-left: auto;
+	margin-right: auto;
+	width: 50px;
+	color: #FFF;
+	padding: 10px;
+}
+
+.column-answer {
+	color: #D5A51A;
 }
 
 #gameboard {
-	width: 100%;
-	background-color: #adabab;
+	border: 1px solid black;
+	/*background-color: #101a7c;*/
+}
+
+th {
+	padding: 10px;
+}
+
+td, th {
+	border: 1px solid black;
 }

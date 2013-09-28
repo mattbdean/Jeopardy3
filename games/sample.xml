@@ -40,8 +40,8 @@
 			<question>Terminator</question>
 		</answerContainer>
 		<answerContainer>
-			<answer>&lt;empty&gt;</answer>
-			<question>&lt;empty&gt;</question>
+			<answer>(empty)</answer>
+			<question>(empty)</question>
 		</answerContainer>
 	</column>
 	<column name="What are you Afraid of?">
@@ -66,7 +66,7 @@
 			<question>Movement (or motion)</question>
 		</answerContainer>
 	</column>
-	<column name="Double-Wetter Words">
+	<column name="Double-Letter Words">
 		<answerContainer>
 			<answer>For centuries Indian rajahs trained this swift cat to hunt gazelles</answer>
 			<question>Cheetahs</question>
