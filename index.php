@@ -22,9 +22,10 @@ function makeGameFor($gameId) {
 	// Print the questions
 	for ($i = 0; $i < $ROW_COUNT; $i++) {
 		echo '<tr>';
-		foreach ($xml->column as $column) {
-			echo '<td class="jeobutton">$' . (($i + 1) * 100) . '</td>';
+		for ($j=0; $j < count($xml->column); $j++) { 
+			echo sprintf('<td class="jeobutton" data-row="%s", data-column="%s">$%s</td>', $i, $j, (($i + 1) * 100));
 		}
+		
 		echo '</tr>';
 	}
 
@@ -43,13 +44,10 @@ function makeGameFor($gameId) {
 	<link rel="stylesheet" href="res/styles/index.css">
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<script>
-	$(document).ready(function() {
-		$(".jeobutton").mouseup(function() {
-			$(this).css('opacity', '0');
-		});
-	});
-	
+	// Make the id var global to js/getdata.js
+	var id = "<?php echo $gameId ?>";
 	</script>
+	<script src="js/getdata.js"></script>
 </head>
 <body>
 	<div id="content-wrapper">
