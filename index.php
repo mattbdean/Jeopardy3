@@ -14,7 +14,7 @@ function makeGameFor($gameId, $teams) {
 	$xml = simplexml_load_file("games/$gameId.xml") or die("I couldn't seem to find that game. Sorry :\\");
 
 	ob_start();
-	echo '<table id="gameboard">';
+	echo '<table class="gameboard">';
 
 	// Print the category headers
 	echo '<tr>';

@@ -21,13 +21,13 @@ body {
 	-webkit-text-fill-color: transparent;
 }
 
-#gameboard {
+table.gameboard {
 	background-color: #101a7c;
 	table-layout: fixed;
 	border-collapse: collapse;
 }
 
-th {
+table.gameboard th {
 	color: #FFF;
 	text-transform: uppercase;
 	text-shadow: 3px 3px #000;
@@ -35,7 +35,7 @@ th {
 	font-size: 20px;
 }
 
-td {
+table.gameboard td {
 	font-size: 30px;
 	color: #D9A41F;
 	text-shadow: 2px 2px #000;
@@ -43,15 +43,15 @@ td {
 	transition-duration: 0.1s;
 }
 
-td:hover {
+table.gameboard td:hover {
 	background-color: #111e91;
 }
 
-td:active {
+table.gameboard td:active {
 	background-color: #0f1766;
 }
 
-td, th {
+table.gameboard td, table.gameboard th {
 	/* Disable selecting the data */
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
