@@ -67,6 +67,7 @@ function makeGameFor($gameId, $teams) {
 	<link href='http://fonts.googleapis.com/css?family=Alfa+Slab+One' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Alegreya:700' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="res/font/gyparody/stylesheet.css">
+	<link rel="stylesheet" href="res/font/korinna/stylesheet.css">
 	<link rel="stylesheet" href="res/styles/index.css">
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<script>
@@ -74,7 +75,6 @@ function makeGameFor($gameId, $teams) {
 	var id = "<?php echo $gameId ?>";
 	</script>
 	<script src="js/getdata.js"></script>
-	<script src="js/popup.js"></script>
 </head>
 <body>
 	<div id="content-wrapper">
@@ -83,7 +83,7 @@ function makeGameFor($gameId, $teams) {
 		</div>
 		<?php makeGameFor($gameId, $teams) ?>
 		<div id="darkness"></div>
-		<div id="popupQuestion"></div>
+		<div id="popupQuestion"><p id="popupQuestionContent"></p></div>
 	</div>
 </body>
 </html>

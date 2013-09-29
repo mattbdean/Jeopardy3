@@ -129,5 +129,15 @@ table.teams td:last-child, table.teams th:last-child {
 	z-index: 6;
 	display: none;
 	color: white;
+	border: 3px outset #0C3C93;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+}
+
+#popupQuestionContent {
 	text-align: center;
+	font-family: Korinna, sans-serif;
+	font-size: 20px;
+	margin: 20px;
 }

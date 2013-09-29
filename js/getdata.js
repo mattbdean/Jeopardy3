@@ -15,7 +15,7 @@ $(document).ready(function() {
 				// Answer: data.answer
 				// Question: data.question
 				$button.css('opacity', '0');
-				$('#popupQuestion').text(data.answer);
+				$('#popupQuestionContent').text(data.answer);
 			},
 			error: function(xhr) {
 				alert("Error: " + xhr.responseText);
