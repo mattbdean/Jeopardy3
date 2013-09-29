@@ -67,6 +67,11 @@ table.gameboard td, table.gameboard th {
 	padding: 16px;
 }
 
+.teams-container {
+	display: table;
+	margin: 0 auto;
+}
+
 table.teams {
 	color: white;
 	text-align: center;

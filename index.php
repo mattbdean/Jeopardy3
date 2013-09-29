@@ -36,6 +36,7 @@ function makeGameFor($gameId, $teams) {
 	echo '</table>';
 
 	// Print the score
+	echo '<div class="teams-container">';
 	echo '<table class="teams">';
 
 	// Team names
@@ -52,6 +53,9 @@ function makeGameFor($gameId, $teams) {
 	}
 	echo '</tr>';
 	echo '</table>';
+
+	// End teams-container
+	echo '</div>';
 
 	ob_end_flush();
 }
