@@ -2,8 +2,12 @@
 // Temporary variables for testing
 
 $gameId = "sample";
+$teams = [];
+for ($i = 0; $i < 5; $i++) {
+	$teams[$i] = 'Team ' . ($i + 1);
+}
 
-function makeGameFor($gameId) {
+function makeGameFor($gameId, $teams) {
 	$ROW_COUNT = 5;
 
 	// Parse an XML file from games/${id}.xml
@@ -31,6 +35,21 @@ function makeGameFor($gameId) {
 
 	echo '</table>';
 
+	echo '<table id="teams">';
+
+	echo '<tr>';
+	foreach ($teams as $team) {
+		echo '<th>' . $team . '</th>';
+	}
+	echo '</tr>';
+
+	echo '<tr>';
+	foreach ($teams as $team) {
+		echo '<td>$' . 0 . '</td>';
+	}
+	echo '</tr>';
+	echo '</table>';
+
 	ob_end_flush();
 }
 ?>
@@ -54,7 +73,7 @@ function makeGameFor($gameId) {
 		<div id="header">
 			<h1 id="header-text">Jeopardy!</h1>
 		</div>
-		<?php makeGameFor($gameId) ?>
+		<?php makeGameFor($gameId, $teams) ?>
 	</div>
 </body>
 </html>
