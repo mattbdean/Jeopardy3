@@ -124,8 +124,10 @@ table.teams td:last-child, table.teams th:last-child {
 	height: 400px;
 	margin-left: -200px;
 	margin-top: -200px;
-	background-color: red;
+	background-color: #101a7c;
 	/* Right above #darkness */
 	z-index: 6;
 	display: none;
+	color: white;
+	text-align: center;
 }

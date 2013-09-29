@@ -5,6 +5,8 @@ $(document).ready(function() {
 	"use strict";
 	$(".jeobutton").mouseup(function() {
 		var $button = $(this);
+		$('#darkness').fadeTo(200, 1);
+		$('#popupQuestion').fadeTo(200, 1);
 		$.ajax({ url: 'getdata.php',
 			data: {id: id, row: $button.attr("data-row"), column: $button.attr("data-column")},
 			type: 'get',
@@ -13,6 +15,7 @@ $(document).ready(function() {
 				// Answer: data.answer
 				// Question: data.question
 				$button.css('opacity', '0');
+				$('#popupQuestion').text(data.answer);
 			},
 			error: function(xhr) {
 				alert("Error: " + xhr.responseText);
