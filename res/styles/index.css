@@ -69,7 +69,6 @@ table.gameboard td, table.gameboard th {
 
 table.teams {
 	color: white;
-	width: 75%;
 	text-align: center;
 	border-collapse: collapse;
 	margin: 20px 0 0 0;
@@ -77,10 +76,12 @@ table.teams {
 
 table.teams th {
 	font-size: 20px;
+	padding: 10px 20px 10px 20px;
 }
 
 table.teams td {
 	font-size: 17px;
+	padding-bottom: 10px;
 }
 
 table.teams td, table.teams th {
