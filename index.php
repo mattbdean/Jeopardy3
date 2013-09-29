@@ -35,14 +35,17 @@ function makeGameFor($gameId, $teams) {
 
 	echo '</table>';
 
-	echo '<table id="teams">';
+	// Print the score
+	echo '<table class="teams">';
 
+	// Team names
 	echo '<tr>';
 	foreach ($teams as $team) {
 		echo '<th>' . $team . '</th>';
 	}
 	echo '</tr>';
 
+	// Default points of "$0"
 	echo '<tr>';
 	foreach ($teams as $team) {
 		echo '<td>$' . 0 . '</td>';
