@@ -74,6 +74,7 @@ function makeGameFor($gameId, $teams) {
 	var id = "<?php echo $gameId ?>";
 	</script>
 	<script src="js/getdata.js"></script>
+	<script src="js/popup.js"></script>
 </head>
 <body>
 	<div id="content-wrapper">
@@ -81,6 +82,8 @@ function makeGameFor($gameId, $teams) {
 			<h1 id="header-text">Jeopardy!</h1>
 		</div>
 		<?php makeGameFor($gameId, $teams) ?>
+		<div id="darkness"></div>
+		<div id="popupQuestion"></div>
 	</div>
 </body>
 </html>

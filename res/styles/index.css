@@ -104,3 +104,28 @@ table.teams td:first-child, table.teams th:first-child {
 table.teams td:last-child, table.teams th:last-child {
 	border-right-width: 0;
 }
+
+#darkness {
+	background: rgba(0, 0, 0, 0.5);
+	display: none;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 5;
+}
+
+#popupQuestion {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 400px;
+	height: 400px;
+	margin-left: -200px;
+	margin-top: -200px;
+	background-color: red;
+	/* Right above #darkness */
+	z-index: 6;
+	display: none;
+}
