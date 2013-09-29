@@ -1,5 +1,4 @@
 <?php
-// var_dump($_GET);
 if (!(isset($_GET['id']) || isset($_GET['row']) || isset($_GET['column']))) {
 	echo 'Empty parameter(s)!';
 	die;
@@ -20,7 +19,6 @@ header('Content-Type: application/json');
 $xml = simplexml_load_file('games/' . $_GET['id'] . '.xml');
 $container = $xml->column[(int) $_GET['column']]->answerContainer[(int) $_GET['row']];
 
-// echo "{}";
 echo json_encode(array('answer' => (string) $container->answer, 'question' => (string) $container->question));
 
 /*
