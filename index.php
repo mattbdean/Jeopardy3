@@ -27,7 +27,7 @@ function makeGameFor($gameId, $teams) {
 	for ($i = 0; $i < $ROW_COUNT; $i++) {
 		echo '<tr>';
 		for ($j=0; $j < count($xml->column); $j++) { 
-			echo sprintf('<td class="jeobutton" data-row="%s", data-column="%s">$%s</td>', $i, $j, (($i + 1) * 100));
+			echo sprintf('<td class="jeoButton" data-row="%s" data-column="%s">$%s</td>', $i, $j, (($i + 1) * 100));
 		}
 		
 		echo '</tr>';
@@ -48,8 +48,8 @@ function makeGameFor($gameId, $teams) {
 
 	// Default points of "$0"
 	echo '<tr>';
-	foreach ($teams as $team) {
-		echo '<td>$' . 0 . '</td>';
+	for ($i = 0; $i < count($teams); $i++) {
+		echo sprintf('<td data-team-id="%s">$0</td>', $i);
 	}
 	echo '</tr>';
 	echo '</table>';
@@ -64,15 +64,19 @@ function makeGameFor($gameId, $teams) {
 <html>
 <head>
 	<title>Classroom Jeopardy</title>
+	<!-- Google Fonts -->
 	<link href='http://fonts.googleapis.com/css?family=Alfa+Slab+One' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Alegreya:700' rel='stylesheet' type='text/css'>
+	<!-- Custom fonts -->
 	<link rel="stylesheet" href="res/font/gyparody/stylesheet.css">
 	<link rel="stylesheet" href="res/font/korinna/stylesheet.css">
 	<link rel="stylesheet" href="res/styles/index.css">
+	<!-- jQuery -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<!-- Scripts -->
 	<script>
 	// Make the id var global to js/getdata.js
-	var id = "<?php echo $gameId ?>";
+	var GAMEID = "<?php echo $gameId ?>";
 	</script>
 	<script src="js/getdata.js"></script>
 </head>
@@ -83,7 +87,28 @@ function makeGameFor($gameId, $teams) {
 		</div>
 		<?php makeGameFor($gameId, $teams) ?>
 		<div id="darkness"></div>
-		<div id="popupQuestion"><p id="popupQuestionContent"></p></div>
+		<div id="popupQuestion">
+			<p id="popupQuestionContent"></p>
+			<div class="buttonContainer">
+				<div class="showAnswerContainer">
+					<button class="popupButton showAnswer">Show answer</button>
+				</div>
+				<div class="teamButtonContainer clear" />
+				<table>
+					<?php
+					function printTeamButtons($teams, $class) {
+						for ($i=0; $i < count($teams); $i++) {
+							echo sprintf('<td><button class="popupButton teamButton %s" data-team-id="%s">%s</button><td>', $class, $i, $teams[$i]);
+						}
+						echo '</tr>';
+					}
+
+					printTeamButtons($teams, "correct");
+					printTeamButtons($teams, "incorrect");
+					?>
+				</table>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

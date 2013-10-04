@@ -1,5 +1,5 @@
 <?php
-if (!(isset($_GET['id']) || isset($_GET['row']) || isset($_GET['column']))) {
+if (!isset($_GET['id']) || !isset($_GET['row']) || !isset($_GET['column'])) {
 	echo 'Empty parameter(s)!';
 	die;
 }

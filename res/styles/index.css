@@ -43,11 +43,11 @@ table.gameboard td {
 	transition-duration: 0.1s;
 }
 
-table.gameboard td:hover {
+table.gameboard td:hover:not(.clicked) {
 	background-color: #111e91;
 }
 
-table.gameboard td:active {
+table.gameboard td:active:not(.clicked) {
 	background-color: #0f1766;
 }
 
@@ -140,4 +140,46 @@ table.teams td:last-child, table.teams th:last-child {
 	font-family: Korinna, sans-serif;
 	font-size: 20px;
 	margin: 20px;
+}
+
+.clear {
+	clear: both;
+}
+
+.buttonContainer {
+	padding: 20px;
+}
+
+button.popupButton {
+
+}
+
+button.showAnswer {
+
+}
+
+button.popupButtonIncorrect {
+	float: right;
+}
+
+button.popupButtonCorrect {
+	float: left;
+}
+
+.buttonContainer button {
+
+}
+
+.correct {
+	/*temp*/
+	background-color: green;
+}
+
+.incorrect {
+	/*temp*/
+	background-color: red;
+}
+
+.clicked {
+	background-color: #081166;
 }
