@@ -151,35 +151,35 @@ table.teams td:last-child, table.teams th:last-child {
 }
 
 button.popupButton {
-
+	font-family: Korinna, sans-serif;
+	font-size: 14;
+	background-color: #efefef;
+	padding: 5px 7px;
+	border: none;
+	border-radius: 5px;
+	transition-duration: 0.25s;
 }
 
-button.showAnswer {
-
+button.popupButton:hover {
+	background-color: #c9c9c9;
 }
 
-button.popupButtonIncorrect {
-	float: right;
+button.popupButton:active {
+	background-color: #727272;
 }
 
-button.popupButtonCorrect {
-	float: left;
+button.teamButton {
+	color: #FFF;
 }
 
-.buttonContainer button {
-
+button.correct {
+	background-color: #1f893d;
 }
 
-.correct {
-	/*temp*/
-	background-color: green;
+button.incorrect {
+	background-color: #d10609;
 }
 
-.incorrect {
-	/*temp*/
-	background-color: red;
-}
-
-.clicked {
+.jeoButton.clicked {
 	background-color: #081166;
 }
