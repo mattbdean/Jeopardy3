@@ -1,17 +1,21 @@
 <?php
+define('ROW_COUNT', 5);
+define('GAME_ID', "sample");
+define('TOTAL', count(simplexml_load_file("games/" . GAME_ID . ".xml")->column) * ROW_COUNT);
+
 // Temporary variables for testing
 
-$gameId = "sample";
 $teams = [];
 for ($i = 0; $i < 5; $i++) {
 	$teams[$i] = 'Team ' . ($i + 1);
 }
 
 function makeGameFor($gameId, $teams) {
-	$ROW_COUNT = 5;
 
 	// Parse an XML file from games/${id}.xml
 	$xml = simplexml_load_file("games/$gameId.xml") or die("I couldn't seem to find that game. Sorry :\\");
+
+	$total = ROW_COUNT * count($xml->column);
 
 	ob_start();
 	echo '<table class="gameboard">';
@@ -24,7 +28,7 @@ function makeGameFor($gameId, $teams) {
 	echo '</tr>';
 
 	// Print the questions
-	for ($i = 0; $i < $ROW_COUNT; $i++) {
+	for ($i = 0; $i < ROW_COUNT; $i++) {
 		echo '<tr>';
 		for ($j=0; $j < count($xml->column); $j++) { 
 			echo sprintf('<td class="jeoButton" data-row="%s" data-column="%s">$%s</td>', $i, $j, (($i + 1) * 100));
@@ -75,8 +79,9 @@ function makeGameFor($gameId, $teams) {
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<!-- Scripts -->
 	<script>
-	// Make the id var global to js/getdata.js
-	var GAMEID = "<?php echo $gameId ?>";
+	// Expose the constants to JavaScript
+	var GAME_ID = "<?php echo GAME_ID ?>";
+	var TOTAL = "<?php echo TOTAL ?>";
 	</script>
 	<script src="js/getdata.js"></script>
 </head>
@@ -85,7 +90,7 @@ function makeGameFor($gameId, $teams) {
 		<div id="header">
 			<h1 id="header-text">Jeopardy!</h1>
 		</div>
-		<?php makeGameFor($gameId, $teams) ?>
+		<?php makeGameFor(GAME_ID, $teams) ?>
 		<div id="darkness"></div>
 		<div id="popupQuestion">
 			<p id="popupQuestionContent"></p>
@@ -108,6 +113,9 @@ function makeGameFor($gameId, $teams) {
 					?>
 				</table>
 			</div>
+		</div>
+		<div id="endGameContent">
+			<p></p>
 		</div>
 	</div>
 </body>

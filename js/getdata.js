@@ -1,5 +1,7 @@
-/*global jQuery, $, GAMEID*/
+/*global jQuery, $, GAME_ID, TOTAL*/
 /*jslint browser: true, white: true, devel:true */
+
+var answered;
 
 function JeoButton(row, column, $jQuery) {
 	"use strict";
@@ -77,7 +79,7 @@ $(function() {
 			url: "getdata.php",
 			type: "get",
 			dataType: "json",
-			data: {id: GAMEID, row: jeoButton.row, column: jeoButton.column},
+			data: {id: GAME_ID, row: jeoButton.row, column: jeoButton.column},
 			success: function(data) {
 				$("#darkness, #popupQuestion").fadeTo(200, 1);
 				$("#popupQuestionContent").text(data.answer);
