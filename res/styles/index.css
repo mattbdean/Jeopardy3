@@ -90,8 +90,8 @@ table.teams td {
 }
 
 table.teams td, table.teams th {
-	border-right: 2px solid #000;
-	border-left: 2px solid #000;
+	border-right: 3px dashed #0B5989;
+	border-left: 3px dashed #0B5989;
 	font-family: Alegreya, sans-serif;
 }
 
