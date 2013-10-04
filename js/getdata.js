@@ -49,7 +49,13 @@ function registerTeamButtonHandlers(jeoButton) {
 				var newValue = add ? oldValue + jeoButton.value : oldValue - jeoButton.value;
 
 				// Set the <td> text to the new dollar value
-				$(this).text("$" + newValue);
+				var valueStr;
+				if (newValue < 0) {
+					valueStr = "-$" + Math.abs(newValue);
+				} else {
+					valueStr = "$" + newValue;
+				}
+				$(this).text(valueStr);
 				killPopup();
 			}
 		});
