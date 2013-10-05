@@ -183,3 +183,22 @@ button.incorrect {
 .jeoButton.clicked {
 	background-color: #081166;
 }
+
+#endGameHeader, #endGameSubheader {
+	text-align: center;
+}
+
+#endGameHeader {
+	font-size: 40px;
+}
+
+#endGameSubheader {
+	font-size: 30px;
+}
+
+#endGameContent {
+	font-family: Korinna, sans-serif;
+	color: #FFF;
+	width: 50%;
+	margin: 0 auto;
+}
