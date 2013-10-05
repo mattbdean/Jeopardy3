@@ -7,3 +7,12 @@
 
 	header("Location: play.php?" . http_build_query(['teams' => $teams, 'game' => $game]));
 ?>
+
+<html>
+<head>
+	<title>Classroom Jeopardy</title>
+</head>
+<body>
+	
+</body>
+</html>

@@ -1,0 +1,49 @@
+table.gameboard {
+	background-color: #101a7c;
+	table-layout: fixed;
+	border-collapse: collapse;
+}
+
+table.gameboard th {
+	color: #FFF;
+	text-transform: uppercase;
+	text-shadow: 3px 3px #000;
+	font-family: "Alegreya" sans-serif;
+	font-size: 20px;
+}
+
+table.gameboard td {
+	font-size: 30px;
+	color: #D9A41F;
+	text-shadow: 2px 2px #000;
+	font-family: "Alfa Slab One" sans-serif;
+	transition-duration: 0.1s;
+}
+
+table.gameboard td:hover:not(.clicked) {
+	background-color: #111e91;
+}
+
+table.gameboard td:active:not(.clicked) {
+	background-color: #0f1766;
+}
+
+table.gameboard td, table.gameboard th {
+	/* Disable selecting the data */
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	cursor: default;
+	user-select: none;
+
+
+	border: 3px solid black;
+	text-align: center;
+	padding: 16px;
+}
+
+.jeoButton.clicked {
+	background-color: #081166;
+}

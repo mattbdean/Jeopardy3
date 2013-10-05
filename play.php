@@ -81,7 +81,11 @@ function makeGameFor($gameId, $teams) {
 	<!-- Custom fonts -->
 	<link rel="stylesheet" href="res/font/gyparody/stylesheet.css">
 	<link rel="stylesheet" href="res/font/korinna/stylesheet.css">
-	<link rel="stylesheet" href="res/styles/index.css">
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="res/styles/game/game.css">
+	<link rel="stylesheet" href="res/styles/game/gameboard.css">
+	<link rel="stylesheet" href="res/styles/game/scores.css">
+	<link rel="stylesheet" href="res/styles/game/popup.css">
 	<!-- jQuery -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<!-- Scripts -->

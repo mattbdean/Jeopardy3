@@ -1,0 +1,37 @@
+.teams-container {
+	display: table;
+	margin: 0 auto;
+}
+
+table.teams {
+	color: white;
+	text-align: center;
+	border-collapse: collapse;
+	margin: 20px 0 0 0;
+}
+
+table.teams th {
+	font-size: 20px;
+	padding: 10px 20px 10px 20px;
+}
+
+table.teams td {
+	font-size: 17px;
+	padding-bottom: 10px;
+}
+
+table.teams td, table.teams th {
+	border-right: 3px dashed #0B5989;
+	border-left: 3px dashed #0B5989;
+	font-family: Alegreya, sans-serif;
+}
+
+/* "Delete" the left most border */
+table.teams td:first-child, table.teams th:first-child {
+	border-left-width: 0;
+}
+
+/* "Delete" the right most border */
+table.teams td:last-child, table.teams th:last-child {
+	border-right-width: 0;
+}
