@@ -1,15 +1,31 @@
 body {
 	margin: 0;
 	background-color: #DBEFFF;
+	font-family: "Open Sans", Arial, sans-serif;
 }
 
 header {
-	padding-top: 10px;
+	padding-top: 25px;
 	width: 960px;
 	margin: 0 auto;
 	text-align: center;
-	color: #FFF;
-	font-size: 30px;
+}
+
+.header-word {
+	color: #ADD5F7;
+	font-size: 55px;
+	font-family: Lato, sans-serif;
+	margin: 0;
+}
+
+#header-to {
+	font-size: 25px;
+}
+
+#header-classroom, #header-jeopardy {
+	font-size: 70px;
+	font-family: Gyparody, "Open Sans", Arial, sans-serif;
+	color: #35478C;
 }
 
 #header-wrapper {
@@ -34,6 +50,7 @@ header {
 	border-bottom-left-radius: 12px;
 }
 
+/* Does not work */
 #navbar:first-child {
 	-webkit-border-top-left-radius: 10px;
 	-webkit-border-bottom-left-radius: 10px;

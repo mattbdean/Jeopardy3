@@ -1,13 +1,23 @@
 <html>
 <head>
-	<title>Welcome to Classroom Jeopardy!</title>
+	<title>Classroom Jeopardy | Welcome!</title>
 	<link rel="stylesheet" href="res/styles/index.css">
+	<link rel="stylesheet" href="res/styles/general.css">
+	<link rel="stylesheet" href="res/font/gyparody/stylesheet.css">
+	<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 </head>
 <body>
 	<div id="content-wrapper">
 		<div id="header-wrapper">
 			<header>
-				<p>Welcome to Classroom Jeopardy</p>
+				<?php
+				$parts = explode(' ', 'Welcome to Classroom Jeopardy');
+
+				foreach ($parts as $word) {
+					echo sprintf('<p class="header-word" id="header-%s">%s</p>', strtolower($word), $word);
+				}
+				?>
 			</header>
 		</div>
 		<div id="navbar">
@@ -29,14 +39,7 @@
 		</div>
 
 		<div id="latest-games">
-			<?php
-			$files = glob('games/*.xml');
-			natsort($files);
-			foreach ($files as $file) {
-				// TODO: Needs work/styling/DB connection
-				// echo sprintf('<a href="playsetup.php">%s</a><br>', $file);
-			}
-			?>
+			
 		</div>
 	</div>
 </body>
