@@ -3,8 +3,6 @@ define('ROW_COUNT', 5);
 define('GAME_ID', "sample");
 define('TOTAL', count(simplexml_load_file("games/" . GAME_ID . ".xml")->column) * ROW_COUNT);
 
-// Temporary variables for testing
-
 $teams = [];
 for ($i = 0; $i < 5; $i++) {
 	$teams[$i] = 'Team ' . ($i + 1);
@@ -81,7 +79,11 @@ function makeGameFor($gameId, $teams) {
 	<script>
 	// Expose the constants to JavaScript
 	var GAME_ID = "<?php echo GAME_ID ?>";
-	var TOTAL = "<?php echo TOTAL ?>";
+	var TOTAL = <?php echo TOTAL ?>;
+	<?php
+	$js_teams = json_encode($teams);
+	echo "var TEAMS = " . $js_teams . ";\n";
+	?>
 	</script>
 	<script src="js/getdata.js"></script>
 </head>
@@ -98,24 +100,27 @@ function makeGameFor($gameId, $teams) {
 				<div class="showAnswerContainer">
 					<button class="popupButton showAnswer">Show answer</button>
 				</div>
-				<div class="teamButtonContainer clear" />
-				<table>
-					<?php
-					function printTeamButtons($teams, $class) {
-						for ($i=0; $i < count($teams); $i++) {
-							echo sprintf('<td><button class="popupButton teamButton %s" data-team-id="%s">%s</button><td>', $class, $i, $teams[$i]);
+				<div class="teamButtonContainer clear">
+					<table>
+						<?php
+						function printTeamButtons($teams, $class) {
+							for ($i=0; $i < count($teams); $i++) {
+								echo sprintf('<td><button class="popupButton teamButton %s" data-team-id="%s">%s</button><td>', $class, $i, $teams[$i]);
+							}
+							echo '</tr>';
 						}
-						echo '</tr>';
-					}
 
-					printTeamButtons($teams, "correct");
-					printTeamButtons($teams, "incorrect");
-					?>
-				</table>
+						printTeamButtons($teams, "correct");
+						printTeamButtons($teams, "incorrect");
+						?>
+					</table>
+				</div>
 			</div>
 		</div>
 		<div id="endGameContent">
-			<p></p>
+			<h1 id="endGameHeader"></h1>
+			<h3 id="endGameSubheader"></h3>
+			<!-- <p id="endGameSummary"></p> -->
 		</div>
 	</div>
 </body>

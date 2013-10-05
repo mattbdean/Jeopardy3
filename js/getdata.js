@@ -1,7 +1,7 @@
-/*global jQuery, $, GAME_ID, TOTAL*/
-/*jslint browser: true, white: true, devel:true */
+/*global jQuery, $, GAME_ID, TOTAL, TEAMS*/
+/*jslint browser: true, white:true, devel:true, plusplus:true */
 
-var answered;
+var answered = 0;
 
 function JeoButton(row, column, $jQuery) {
 	"use strict";
@@ -9,6 +9,60 @@ function JeoButton(row, column, $jQuery) {
 	this.column = parseInt(column, 10);
 	this.value = parseInt($jQuery[0].innerHTML.replace("$", ""), 10);
 	this.$jQuery = $jQuery;
+}
+
+function Team(name, score) {
+	"use strict";
+	this.name = name;
+	this.score = score;
+}
+
+function generateGameReport() {
+	"use strict";
+
+	var teams = {};
+	var counter = 0;
+	$('.teams td[data-team-id]').each(function() {
+		teams[counter] = new Team(TEAMS[counter], parseInt($(this).text().replace("$", ""), 10));
+		counter++;
+	});
+
+	var highestScore = 0;
+	// Get the team(s) with the highest scores
+	for (var i = 0; i < counter; i++) {
+		if (teams[i].score > highestScore) {
+			highestScore = teams[i].score;
+		}
+	}
+
+	var winningTeams = {};
+	var winningTeamsCounter = 0;
+	for (var i = 0; i < counter; i++) {
+		if (teams[i].score === highestScore) {
+			winningTeams[++winningTeamsCounter] = teams[i];
+		}
+	}
+
+	var headerText = 'Congratulations,';
+	var subheaderText = '';
+	if (winningTeamsCounter === 1) {
+		subheaderText = winningTeams[1].name + "!";
+	} else if (winningTeamsCounter === 2) {
+		subheaderText = winningTeams[1].name + " and " + winningTeams[2].name + "!";
+	} else {
+		// More than 3 winning teams
+		for (var i = 0; i < winningTeamsCounter; i++) {
+			if (i === winningTeamsCounter - 1) {
+				subheaderText += " and " + winningTeams[i + 1].name;
+			} else {
+				subheaderText += winningTeams[i + 1].name + ", ";
+			}
+		}
+	}
+
+	$('#endGameHeader').text(headerText);
+	$('#endGameSubheader').text(subheaderText);
+	$('#endGameContent').show(400);
 }
 
 function resetPopup() {
@@ -25,7 +79,6 @@ function resetPopup() {
 
 function killPopup() {
 	"use strict";
-	console.log('killed');
 	// Fade the darkness and popup
 	$('#darkness, #popupQuestion').fadeTo(200, 0);
 	// And when it's done, hide it so that other elements can be
@@ -33,6 +86,15 @@ function killPopup() {
 	$('#darkness, #popupQuestion').promise().done(function() {
 		$(this).hide();
 	});
+
+	// Check for the end of the game
+	answered += 1;
+	if (answered === TOTAL) {
+		$('.gameboard').fadeOut(400, function() {
+			$('#endGameContent').toggle(400);
+			generateGameReport();
+		});
+	}
 }
 
 function registerTeamButtonHandlers(jeoButton) {
@@ -66,6 +128,7 @@ function registerTeamButtonHandlers(jeoButton) {
 
 $(function() {
 	"use strict";
+	$('#endGameContent').hide();
 	$('.gameboard').find('.jeoButton').click(function() {
 		// Unbind the button
 		$(this).unbind('click');
