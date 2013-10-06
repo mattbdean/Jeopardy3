@@ -1,0 +1,23 @@
+header {
+	text-align: left;
+	padding: 25px 0 15px 0;
+	width: 960px;
+	margin: 0 auto;
+}
+
+#app-name {
+	font-family: Gyparody, "Open Sans", Arial, sans-serif;
+	font-size: 50px;
+	text-decoration: none;
+	color: #35478C;
+}
+
+#page-title {
+	font-size: 30px;
+	margin: 10px 0;
+	color: #ADD5F7;
+}
+
+#header-wrapper {
+	background-color: #7FB2F0;
+}

@@ -3,6 +3,8 @@
 	<title>Create a Game | Classroom Jeopardy</title>
 	<link rel="stylesheet" href="res/styles/create.css">
 	<link rel="stylesheet" href="res/styles/general.css">
+	<link rel="stylesheet" href="res/styles/header.css">
+	<link rel="stylesheet" href="res/font/gyparody/stylesheet.css">
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	<script src="js/jquery-1.10.2.min.js"></script>
 	<script src="js/create_hide.js"></script>
@@ -10,9 +12,10 @@
 <body>
 	<div id="content-wrapper">
 		<div id="header-wrapper">
-			<header>
-				Create a new game
-			</header>
+			<?php
+			$pageTitle = 'Create a new game';
+			require 'common/header.php';
+			?>
 		</div>
 		
 		<section id="game-meta" class="centered">
