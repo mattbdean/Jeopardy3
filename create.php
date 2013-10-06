@@ -60,7 +60,7 @@
 					echo '<span class="qa-label-hint">(answer, question)</span></p>';
 					// End qa-label-header
 					echo '</div>';
-					echo '<div data-index="' . $j . '" class="question-answer-label-container">';
+					echo '<div class="question-answer-label-container">';
 					echo '<label>Answer:</label><input type="text"><br>';
 					echo '<label>Question:</label><input type="text"><br>';
 
