@@ -14,6 +14,7 @@ header {
 .centered {
 	width: 960px;
 	margin: 0 auto;
+	clear: both;
 }
 
 .centered-text {

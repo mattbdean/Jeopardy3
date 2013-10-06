@@ -11,21 +11,23 @@
 	<div id="content-wrapper">
 		<div id="header-wrapper">
 			<header>
-				<p>Create a new game</p>
+				Create a new game
 			</header>
 		</div>
-
-		<div id="game-meta" class="centered-text">
+		
+		<section id="game-meta" class="centered">
+			<h1>Basic Info</h1>
 			<label>Title:</label><input type="text"><br>
 			<label>Your Name:</label><input type="text"><br>
-		</div>
-
-		<div id="game-data" class="centered">
+		</section>
+		<hr class="centered">
+		<section id="game-data" class="centered">
+			<h1>Questions and Answers</h1>
 			<?php
 			$columns = 5;
 			ob_start();
 			for ($i = 0; $i < $columns; $i++) {
-				echo '<div class="category-container">';
+				echo '<section class="category-container">';
 				echo '<img class="expand-contract-icon" src="res/img/minus.png"><p class="category-name" contenteditable="true">Category ' . ($i + 1) . '</p>';
 				for ($j = 0; $j < 5; $j++) {
 					echo '<img data-index="' . $j . '" class="expand-contract-icon expand-contract-icon-2" src="res/img/minus.png"><p class="question-answer-label">Answer for $' . (($j + 1) * 100) . ':</p>';
@@ -34,12 +36,12 @@
 					echo '<label>Question:</label><input type="text"><br>';
 					echo '</div>';
 				}
-			// End category-container
-				echo '</div>';
+				// End category-container
+				echo '</section>';
 			}
 			ob_end_flush();
 			?>
-		</div>
+		</section>
 	</div>
 </body>
 </html>

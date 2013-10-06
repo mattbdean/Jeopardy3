@@ -9,25 +9,59 @@
 }
 
 .category-name {
-	margin-top: 20px;
+	margin: 10px 0;
 	white-space: nowrap;
 	width:200px;
 	overflow: hidden;
 	white-space:nowrap;
-	margin: 0;
+	font-size: 24px;
 }
 
 img.expand-contract-icon {
 	width: 16px;
 	height: 16px;
 	display: inline;
-	vertical-align: middle;
+	vertical-align: bottom;
 	padding-right: 5px;
 	float: left;
+	position: relative;
+	top: 8px;
 }
 
 img.expand-contract-icon-2 {
-	position: relative;
 	top: 7px;
 	left: 40px;
+}
+
+.category-container label {
+	width: 10%;
+	text-align: right;
+	float: left;
+}
+
+.category-container input[type="text"] {
+	width: 85%;
+	text-align: left;
+	float: right;
+}
+
+#game-meta {
+	margin-bottom: 20px;
+}
+
+#game-meta label {
+	width: 10%;
+	text-align: right;
+	float: left;
+}
+
+#game-meta input[type="text"] {
+	width: 35%;
+	margin-left: 10px;
+	text-align: left;
+}
+
+h1 {
+	font-weight: normal;
+	font-size: 35px;
 }
