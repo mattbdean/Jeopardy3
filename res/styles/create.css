@@ -1,0 +1,33 @@
+.question-answer-label {
+	margin: 0;
+	padding-left: 60px;
+	padding-top: 5px;
+}
+
+.question-answer-label-container {
+	padding-left: 80px;
+}
+
+.category-name {
+	margin-top: 20px;
+	white-space: nowrap;
+	width:200px;
+	overflow: hidden;
+	white-space:nowrap;
+	margin: 0;
+}
+
+img.expand-contract-icon {
+	width: 16px;
+	height: 16px;
+	display: inline;
+	vertical-align: middle;
+	padding-right: 5px;
+	float: left;
+}
+
+img.expand-contract-icon-2 {
+	position: relative;
+	top: 7px;
+	left: 40px;
+}
