@@ -33,6 +33,11 @@ function changeAnswerContainer($clickedIcon, mode) {
 					$clickedIcon.attr('src', icons.plus);
 					break;
 			}
+
+			// Show a small preview of the question/answer
+			$(this).children('input[type="text"]').each(function() {
+
+			});
 		}
 	});
 }

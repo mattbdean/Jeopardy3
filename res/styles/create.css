@@ -1,11 +1,16 @@
 .question-answer-label {
-	margin: 0;
+	margin: 2px;
 	padding-left: 60px;
-	padding-top: 5px;
+	padding-top: 10px;
 }
 
 .question-answer-label-container {
 	padding-left: 80px;
+}
+
+.qa-label-hint {
+	font-style: italic;
+	font-size: 11px;
 }
 
 .category-name {

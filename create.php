@@ -53,10 +53,21 @@
 				echo '<section class="category-container">';
 				echo '<img class="expand-contract-icon" data-cat-index="' . $i . '" src="res/img/minus.png"><p class="category-name" contenteditable="true">Category ' . ($i + 1) . '</p>';
 				for ($j = 0; $j < 5; $j++) {
-					echo '<img data-index="' . $j . '" class="expand-contract-icon expand-contract-icon-2" src="res/img/minus.png"><p class="question-answer-label">Answer for $' . (($j + 1) * 100) . ':</p>';
+					echo '<div class="qa-container" data-index="' . $j . '">';
+
+					echo '<div class="qa-label-header">';
+					echo '<img data-index="' . $j . '" class="expand-contract-icon expand-contract-icon-2" src="res/img/minus.png">';
+					echo '<p class="question-answer-label">Answer for $' . (($j + 1) * 100) . ': ';
+					echo '<span class="qa-label-hint">(answer, question)</span></p>';
+					// End qa-label-header
+					echo '</div>';
 					echo '<div data-index="' . $j . '" class="question-answer-label-container">';
 					echo '<label>Answer:</label><input type="text"><br>';
 					echo '<label>Question:</label><input type="text"><br>';
+
+					// End question-answer-label-container
+					echo '</div>';
+					// End qa-container
 					echo '</div>';
 				}
 				// End category-container
