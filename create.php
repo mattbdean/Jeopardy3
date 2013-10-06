@@ -54,7 +54,6 @@
 				echo '<p class="category-name" contenteditable="true">Category ' . ($i + 1) . '</p>';
 				for ($j = 0; $j < 5; $j++) {
 					echo '<div class="qa-container" data-index="' . $j . '">';
-
 					echo '<div class="qa-label-header">';
 					echo '<p class="question-answer-label">Answer for $' . (($j + 1) * 100) . ': ';
 					echo '<span class="qa-label-hint">(answer, question)</span></p>';
