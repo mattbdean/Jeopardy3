@@ -55,7 +55,7 @@ img.expand-contract-icon-2 {
 	float: left;
 }
 
-#game-meta input[type="text"] {
+#game-meta input, #game-meta select {
 	width: 35%;
 	margin-left: 10px;
 	text-align: left;

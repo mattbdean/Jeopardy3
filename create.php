@@ -17,8 +17,28 @@
 		
 		<section id="game-meta" class="centered">
 			<h1>Basic Info</h1>
-			<label>Title:</label><input type="text"><br>
+			<label>Title:</label><input type="text" autofocus><br>
 			<label>Your Name:</label><input type="text"><br>
+			<label>Category</label>
+			<select>
+				<option value="" disabled="disabled" selected="selected">Select a category</option>
+				<?php
+				$categories = [
+					"English" => "english",
+					"Music" => "music",
+					"Science" => "science",
+					"Math" => "math",
+					"Other" => "other",
+					"Technology" => "technology",
+					"History" => "history"
+				];
+				ksort($categories);
+
+				foreach ($categories as $name => $value) {
+					echo sprintf('<option value="%s">%s</option>', $value, $name);
+				}
+				?>
+			</select><br>
 		</section>
 		<hr class="centered">
 		<section id="game-data" class="centered">
