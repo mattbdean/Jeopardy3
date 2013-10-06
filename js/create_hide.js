@@ -66,4 +66,12 @@ $(function() {
 	$('.expand-contract-icon.expand-contract-icon-2').click(function() {
 		changeAnswerContainer($(this), 'toggle');
 	});
+
+	// Hide all the categories except the first one
+	$('.expand-contract-icon:not(.expand-contract-icon-2)').each(function() {
+		if ($(this).attr('data-cat-index') != 0) {
+			toggleCategory($(this));
+		}
+
+	});
 });
