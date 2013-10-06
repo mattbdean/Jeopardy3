@@ -1,10 +1,18 @@
-.question-answer-label {
-	margin: 2px;
-	padding-left: 60px;
-	padding-top: 10px;
+/* qa = question-answer */
+
+.qa-label {
+	margin: 10px 0 0 30px;
+	cursor: default;
+
+	transition-duration: 0.1s;
+	-webkit-transition-duration: 0.1s; /*Safari*/
 }
 
-.question-answer-label-container {
+.qa-label:hover {
+	background-color: #edf7ff;
+}
+
+.qa-container {
 	padding-left: 80px;
 }
 
@@ -14,7 +22,7 @@
 }
 
 .category-name {
-	margin: 10px 0;
+	margin: 10px 0 5px 0;
 	white-space: nowrap;
 	width:200px;
 	overflow: hidden;

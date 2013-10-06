@@ -53,17 +53,17 @@
 				echo '<section class="category-container">';
 				echo '<p class="category-name" contenteditable="true">Category ' . ($i + 1) . '</p>';
 				for ($j = 0; $j < 5; $j++) {
-					echo '<div class="qa-container" data-index="' . $j . '">';
+					echo '<div class="qa-container-data" data-index="' . $j . '">';
 					echo '<div class="qa-label-header">';
-					echo '<p class="question-answer-label">Answer for $' . (($j + 1) * 100) . ': ';
+					echo '<p class="qa-label">Answer for $' . (($j + 1) * 100) . ': ';
 					echo '<span class="qa-label-hint">(answer, question)</span></p>';
 					// End qa-label-header
 					echo '</div>';
-					echo '<div class="question-answer-label-container">';
+					echo '<div class="qa-container">';
 					echo '<label>Answer:</label><input type="text"><br>';
 					echo '<label>Question:</label><input type="text"><br>';
 
-					// End question-answer-label-container
+					// End qa-label-container
 					echo '</div>';
 					// End qa-container
 					echo '</div>';
