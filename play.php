@@ -87,7 +87,7 @@ function makeGameFor($gameId, $teams) {
 	<link rel="stylesheet" href="res/styles/game/scores.css">
 	<link rel="stylesheet" href="res/styles/game/popup.css">
 	<!-- jQuery -->
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script src="js/jquery-1.10.2.min.js"></script>
 	<!-- Scripts -->
 	<script>
 	// Expose the constants to JavaScript

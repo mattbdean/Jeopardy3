@@ -4,6 +4,8 @@
 	<link rel="stylesheet" href="res/styles/create.css">
 	<link rel="stylesheet" href="res/styles/general.css">
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<script src="js/jquery-1.10.2.min.js"></script>
+	<script src="js/create_hide.js"></script>
 </head>
 <body>
 	<div id="content-wrapper">
@@ -26,8 +28,8 @@
 				echo '<div class="category-container">';
 				echo '<img class="expand-contract-icon" src="res/img/minus.png"><p class="category-name" contenteditable="true">Category ' . ($i + 1) . '</p>';
 				for ($j = 0; $j < 5; $j++) {
-					echo '<img class="expand-contract-icon expand-contract-icon-2" src="res/img/minus.png"><p class="question-answer-label">Answer for $' . (($j + 1) * 100) . ':</p>';
-					echo '<div class="question-answer-label-container">';
+					echo '<img data-index="' . $j . '" class="expand-contract-icon expand-contract-icon-2" src="res/img/minus.png"><p class="question-answer-label">Answer for $' . (($j + 1) * 100) . ':</p>';
+					echo '<div data-index="' . $j . '" class="question-answer-label-container">';
 					echo '<label>Answer:</label><input type="text"><br>';
 					echo '<label>Question:</label><input type="text"><br>';
 					echo '</div>';
