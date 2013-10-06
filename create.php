@@ -44,7 +44,7 @@
 			</select><br>
 		</section>
 		<hr class="centered">
-		<section id="game-data" class="centered">
+		<div id="game-data" class="centered">
 			<h1>Questions and Answers</h1>
 			<?php
 			$columns = 5;
@@ -64,7 +64,7 @@
 			}
 			ob_end_flush();
 			?>
-		</section>
+		</div>
 	</div>
 </body>
 </html>
