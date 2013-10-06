@@ -51,12 +51,11 @@
 			ob_start();
 			for ($i = 0; $i < $columns; $i++) {
 				echo '<section class="category-container">';
-				echo '<img class="expand-contract-icon" data-cat-index="' . $i . '" src="res/img/minus.png"><p class="category-name" contenteditable="true">Category ' . ($i + 1) . '</p>';
+				echo '<p class="category-name" contenteditable="true">Category ' . ($i + 1) . '</p>';
 				for ($j = 0; $j < 5; $j++) {
 					echo '<div class="qa-container" data-index="' . $j . '">';
 
 					echo '<div class="qa-label-header">';
-					echo '<img data-index="' . $j . '" class="expand-contract-icon expand-contract-icon-2" src="res/img/minus.png">';
 					echo '<p class="question-answer-label">Answer for $' . (($j + 1) * 100) . ': ';
 					echo '<span class="qa-label-hint">(answer, question)</span></p>';
 					// End qa-label-header
