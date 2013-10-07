@@ -18,15 +18,16 @@
 			?>
 		</div>
 		
-		<section id="game-meta" class="centered">
-			<h1>Basic Info</h1>
-			<label>Title:</label><input type="text" autofocus><br>
-			<label>Your Name:</label><input type="text"><br>
-			<label>Category</label>
-			<select>
-				<option value="" disabled="disabled" selected="selected">Select a category</option>
-				<?php
-				$categories = [
+		<form action="creategame.php" method="post">
+			<section id="game-meta" class="centered">
+				<h1>Basic Info</h1>
+				<label>Title:</label><input name="game-title" type="text" autofocus><br>
+				<label>Your Name:</label><input name="game-creator" type="text"><br>
+				<label>Category</label>
+				<select name="game-category">
+					<option value="" disabled="disabled" selected="selected">Select a category</option>
+					<?php
+					$categories = [
 					"English" => "english",
 					"Music" => "music",
 					"Science" => "science",
@@ -34,43 +35,47 @@
 					"Other" => "other",
 					"Technology" => "technology",
 					"History" => "history"
-				];
-				ksort($categories);
+					];
+					ksort($categories);
 
-				foreach ($categories as $name => $value) {
-					echo sprintf('<option value="%s">%s</option>', $value, $name);
-				}
-				?>
-			</select><br>
-		</section>
-		<hr class="centered">
-		<div id="game-data" class="centered">
-			<h1>Questions and Answers</h1>
-			<?php
-			$columns = 5;
-			ob_start();
-			for ($i = 0; $i < $columns; $i++) {
-				echo '<section class="category-container">';
-				echo '<p class="category-name" contenteditable="true">Category ' . ($i + 1) . '</p>';
-				for ($j = 0; $j < 5; $j++) {
-					echo '<div class="qa-container-data" data-index="' . $j . '">';
-					echo '<p class="qa-label">Answer for $' . (($j + 1) * 100) . ': ';
-					echo '<span class="qa-label-hint" style="display: none"></span></p>';
-					echo '<div class="qa-container">';
-					echo '<label>Answer:</label><input type="text"><br>';
-					echo '<label>Question:</label><input type="text"><br>';
+					foreach ($categories as $name => $value) {
+						echo sprintf('<option value="%s">%s</option>', $value, $name);
+					}
+					?>
+				</select><br>
+			</section>
+			<hr class="centered">
+			<div id="game-data" class="centered">
+				<h1>Questions and Answers</h1>
+				<?php
+				$columns = 5;
+				ob_start();
+				for ($i = 0; $i < $columns; $i++) {
+					echo '<section class="category-container">';
+					echo '<p class="category-name" contenteditable="true">Category ' . ($i + 1) . '</p>';
+					for ($j = 0; $j < 5; $j++) {
+						echo '<div class="qa-container-data" data-index="' . $j . '">';
+						echo '<p class="qa-label">Answer for $' . (($j + 1) * 100) . ': ';
+						echo '<span class="qa-label-hint" style="display: none"></span></p>';
+						echo '<div class="qa-container">';
+						echo '<label>Answer:</label><input type="text"><br>';
+						echo '<label>Question:</label><input type="text"><br>';
 
 					// End qa-label-container
-					echo '</div>';
+						echo '</div>';
 					// End qa-container
-					echo '</div>';
-				}
+						echo '</div>';
+					}
 				// End category-container
-				echo '</section>';
-			}
-			ob_end_flush();
-			?>
-		</div>
+					echo '</section>';
+				}
+				ob_end_flush();
+				?>
+			</div>
+			<div class="centered">
+				<button id="create-game">Create Game</button>
+			</div>
+		</form>
 	</div>
 </body>
 </html>

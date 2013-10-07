@@ -1,5 +1,9 @@
 /* qa = question-answer */
 
+#content-wrapper {
+	margin-bottom: 200px;
+}
+
 .qa-label {
 	margin: 10px 0 0 30px;
 	cursor: default;
