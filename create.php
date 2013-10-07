@@ -1,3 +1,17 @@
+<?php
+require 'cfg/utils.php';
+
+/*
+ * VALIDATION:
+ * game-title: Less than 100 characters
+ * game-creator: Less than 100 characters
+ * game-category: One of the categories in /cfg/categories.json
+ * [answer/question]-[0-5]_[0-5]: Less than 500 characters
+ */
+
+// var_dump($_POST);
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +33,7 @@
 			?>
 		</div>
 		
-		<form action="creategame.php" method="post">
+		<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
 			<section id="game-meta" class="centered">
 				<h1>Basic Info</h1>
 				<label>Title:</label><input name="game-title" type="text" autofocus><br>
@@ -28,15 +42,7 @@
 				<select name="game-category">
 					<option value="" disabled="disabled" selected="selected">Select a category</option>
 					<?php
-					$categories = [
-					"English" => "english",
-					"Music" => "music",
-					"Science" => "science",
-					"Math" => "math",
-					"Other" => "other",
-					"Technology" => "technology",
-					"History" => "history"
-					];
+					$categories = getConfigJson("categories");
 					ksort($categories);
 
 					foreach ($categories as $name => $value) {
@@ -49,18 +55,18 @@
 			<div id="game-data" class="centered">
 				<h1>Questions and Answers</h1>
 				<?php
-				$columns = 5;
+				$columns = getConfigJson('constants')['categories'];
 				ob_start();
 				for ($i = 0; $i < $columns; $i++) {
 					echo '<section class="category-container">';
-					echo '<p class="category-name" contenteditable="true">Category ' . ($i + 1) . '</p>';
+					echo '<input type="text" class="category-name" value="Category ' . ($i + 1) . '">';
 					for ($j = 0; $j < 5; $j++) {
 						echo '<div class="qa-container-data" data-index="' . $j . '">';
 						echo '<p class="qa-label">Answer for $' . (($j + 1) * 100) . ': ';
 						echo '<span class="qa-label-hint" style="display: none"></span></p>';
 						echo '<div class="qa-container">';
-						echo '<label>Answer:</label><input type="text"><br>';
-						echo '<label>Question:</label><input type="text"><br>';
+						echo sprintf('<label>Answer:</label><input name="answer-%s_%s" type="text"><br>', $i, $j);
+						echo sprintf('<label>Question:</label><input name="question-%s_%s" type="text"><br>', $i, $j);
 
 					// End qa-label-container
 						echo '</div>';
