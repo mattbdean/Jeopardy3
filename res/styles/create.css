@@ -31,10 +31,12 @@
 .category-name {
 	margin: 10px 0 5px 0;
 	white-space: nowrap;
-	width:200px;
+	width: 50%;
 	overflow: hidden;
 	white-space:nowrap;
 	font-size: 24px;
+	border: 1px dashed #000;
+	background-color: #FFF;
 }
 
 img.expand-contract-icon {
