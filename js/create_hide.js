@@ -1,77 +1,39 @@
 /*global $*/
-/*jslint browser: true, white:true, devel:true, plusplus:true */
+/*jslint browser: true, white:true, devel:true, plusplus:true, vars:true */
 
-var icons = {};
-icons.minus = 'res/img/minus.png';
-icons.plus = 'res/img/plus.png';
-
-
-function toggleIcon($icon) {
-	"use strict";
-	var newIcon = $icon.attr('src') === icons.minus ? icons.plus : icons.minus;
-	// Set the "src" attribute to the new icon
-	$icon.attr('src', newIcon);
-}
-
-
-function changeAnswerContainer($clickedIcon, mode) {
+function makeHint(answer, question, $hint) {
 	"use strict";
 
-	$clickedIcon.siblings('.question-answer-label-container[data-index]').each(function() {
-		if ($(this).attr('data-index') === $clickedIcon.attr('data-index')) {
-			switch (mode) {
-				case 'toggle':
-					$(this).toggle('medium');
-					toggleIcon($clickedIcon);
-					break;
-				case 'hide':
-					$(this).hide('medium');
-					$clickedIcon.attr('src', icons.minus);
-					break;
-				case 'show':
-					$(this).show('medium');
-					$clickedIcon.attr('src', icons.plus);
-					break;
-			}
-		}
-	});
-}
+	var cutoff = 30;
+	if (answer.length > cutoff) {
+		answer = answer.substring(0, cutoff) + "...";
+	}
+	if (question.length > cutoff) {
+		question = question.substring(0, cutoff) + "...";
+	}
 
-function toggleCategory($clickedIcon) {
-	"use strict";
-	$clickedIcon.siblings('.expand-contract-icon-2').each(function() {
-		if ($(this).is(':hidden')) {
-			changeAnswerContainer($(this), 'show');
-		} else {
-			changeAnswerContainer($(this), 'hide');
-		}
-		toggleIcon($(this));
-	});
+	if (answer.length === 0) {
+		answer = '<span class="red">empty</span>';
+	}
+	if (question.length === 0) {
+		question = '<span class="red">empty</span>';
+	}
 
-	// Toggle the visibility of all the answer container icons, question/answer labels, and question/answer label containers
-	$clickedIcon.siblings(".expand-contract-icon-2, .question-answer-label").toggle('medium');
-
-	toggleIcon($clickedIcon);
+	$hint.html('(' + answer + ', ' + question + ')');
 }
 
 $(function() {
 	"use strict";
-	// Look for Category icon presses
-	// (icons next to categories do not have the expand-contract-icon-2 class)
-	$('.expand-contract-icon:not(.expand-contract-icon-2)').click(function() {
-		toggleCategory($(this));
-	});
+	$('.qa-label').click(function() {
+		var $qaLabel = $(this);
+		$(this).siblings('.qa-container').toggle('medium');
 
-	// Look for icons next to "Answer for"
-	$('.expand-contract-icon.expand-contract-icon-2').click(function() {
-		changeAnswerContainer($(this), 'toggle');
-	});
+		var $hint = $qaLabel.children('.qa-label-hint');
+		$hint.toggle('medium');
 
-	// Hide all the categories except the first one
-	$('.expand-contract-icon:not(.expand-contract-icon-2)').each(function() {
-		if ($(this).attr('data-cat-index') != 0) {
-			toggleCategory($(this));
-		}
-
+		var $inputs = $qaLabel.siblings('.qa-container').children('input[type="text"]');
+		var answer = $inputs[0].value;
+		var question = $inputs[1].value;
+		makeHint(answer, question, $hint);
 	});
 });

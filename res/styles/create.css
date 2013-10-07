@@ -1,15 +1,35 @@
-.question-answer-label {
-	margin: 0;
-	padding-left: 60px;
-	padding-top: 5px;
+/* qa = question-answer */
+
+.qa-label {
+	margin: 10px 0 0 30px;
+	cursor: default;
+
+	transition-duration: 0.1s;
+	-webkit-transition-duration: 0.1s; /*Safari*/
+
+	-webkit-user-select: none;  /* Chrome all / Safari all */
+	-moz-user-select: none;     /* Firefox all */
+	-ms-user-select: none;      /* IE 10+ */
+	-o-user-select: none;
+	user-select: none;    
 }
 
-.question-answer-label-container {
+.qa-label:hover {
+	background-color: #edf7ff;
+}
+
+.qa-container {
 	padding-left: 80px;
 }
 
+.qa-label-hint {
+	font-style: italic;
+	font-size: 11px;
+	color: #7a7a7a;
+}
+
 .category-name {
-	margin: 10px 0;
+	margin: 10px 0 5px 0;
 	white-space: nowrap;
 	width:200px;
 	overflow: hidden;
@@ -64,4 +84,8 @@ img.expand-contract-icon-2 {
 h1 {
 	font-weight: normal;
 	font-size: 35px;
+}
+
+.red {
+	color: #fc4949;
 }
