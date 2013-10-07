@@ -72,6 +72,7 @@ function makeGameFor($gameId, $teams) {
 }
 ?>
 
+<!DOCTYPE html>
 <html>
 <head>
 	<title>Classroom Jeopardy</title>
