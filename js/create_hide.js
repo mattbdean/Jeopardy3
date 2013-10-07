@@ -36,4 +36,11 @@ $(function() {
 		var question = $inputs[1].value;
 		makeHint(answer, question, $hint);
 	});
+
+	$(".category-name").keypress(function(e) {
+		if (e.keyCode === 13) { // Enter
+			e.preventDefault(); // Prevent a new line
+			$(this).blur(); // Unfocus it
+		}
+	});
 });
