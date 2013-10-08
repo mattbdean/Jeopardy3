@@ -1,6 +1,6 @@
 <?php
 require 'cfg/utils.php';
-define('ROW_COUNT', 6);
+define('ROW_COUNT', 5);
 define('GAME_ID', htmlspecialchars($_GET['game']));
 
 // Check if the game ID is "sample" or not equal to 0 (a non-integer string input)
@@ -114,29 +114,26 @@ function makeGameFor($gameId, $teams) {
 			<div class="buttonContainer">
 				<div class="showAnswerContainer">
 					<button class="popupButton showAnswer">Show answer</button>
-				</div>
-				<div class="teamButtonContainer clear">
-					<table>
-						<?php
-						function printTeamButtons($teams, $class) {
-							for ($i=0; $i < count($teams); $i++) {
-								echo sprintf('<td><button class="popupButton teamButton %s" data-team-id="%s">%s</button><td>', $class, $i, $teams[$i]);
-							}
-							echo '</tr>';
-						}
+				</div>					<table class="teamButtonContainer">
+				<?php
+				function printTeamButtons($teams, $class) {
+					for ($i=0; $i < count($teams); $i++) {
+						echo sprintf('<td><button class="popupButton teamButton %s" data-team-id="%s">%s</button><td>', $class, $i, $teams[$i]);
+					}
+					echo '</tr>';
+				}
 
-						printTeamButtons($teams, "correct");
-						printTeamButtons($teams, "incorrect");
-						?>
-					</table>
-				</div>
-			</div>
-		</div>
-		<div id="endGameContent">
-			<h1 id="endGameHeader"></h1>
-			<h3 id="endGameSubheader"></h3>
-			<!-- <p id="endGameSummary"></p> -->
+				printTeamButtons($teams, "correct");
+				printTeamButtons($teams, "incorrect");
+				?>
+			</table>
 		</div>
 	</div>
+	<div id="endGameContent">
+		<h1 id="endGameHeader"></h1>
+		<h3 id="endGameSubheader"></h3>
+		<!-- <p id="endGameSummary"></p> -->
+	</div>
+</div>
 </body>
 </html>

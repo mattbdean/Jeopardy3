@@ -11,12 +11,14 @@
 
 #popupQuestion {
 	position: absolute;
-	top: 50%;
+	
+	width: 800px;
+	height: 300px;
+	position: absolute;
 	left: 50%;
-	width: 400px;
-	height: 400px;
-	margin-left: -200px;
-	margin-top: -200px;
+	top: 50%;
+	margin: -150px 0 0 -400px;
+
 	background-color: #101a7c;
 	/* Right above #darkness */
 	z-index: 6;
@@ -37,6 +39,10 @@
 
 .buttonContainer {
 	padding: 20px;
+}
+
+.teamButtonContainer {
+	margin: 0 auto;
 }
 
 button.popupButton {

@@ -21,10 +21,6 @@ body {
 	-webkit-text-fill-color: transparent;
 }
 
-.clear {
-	clear: both;
-}
-
 #endGameHeader, #endGameSubheader {
 	text-align: center;
 }
