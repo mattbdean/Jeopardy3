@@ -1,6 +1,6 @@
 <?php
 require 'cfg/utils.php';
-define('ROW_COUNT', getConfigJson('constants')['categories']);
+define('ROW_COUNT', 6);
 define('GAME_ID', htmlspecialchars($_GET['game']));
 
 // Check if the game ID is "sample" or not equal to 0 (a non-integer string input)
