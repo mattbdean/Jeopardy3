@@ -5,6 +5,7 @@ require 'classes/category.class.php';
 $categories = getConfigJson("categories");
 $columns = getConfigJson('constants')['categories'];
 $sumbitted = isset($_POST['submit']);
+$containsError = false;
 
 /*
  * VALIDATION:
@@ -23,11 +24,14 @@ function validQuestionAnswer($varName) {
 	if (isset($_POST[$varName])) {
 		$var = $_POST[$varName];
 
-		// Length is not 0 and less than 500
-		return strlen($var) != 0 && strlen($var) < 500;
+		if (strlen($var) === 0) {
+			return 'No text given!';
+		} else if (strlen($var) > 500) {
+			return "The value can't be over 500 characters long!";
+		}
 	}
 
-	return false;
+	return '';
 }
 
 /**
@@ -38,11 +42,14 @@ function validCategoryName($varName) {
 	if (isset($_POST[$varName])) {
 		$var = $_POST[$varName];
 
-		// Not empty and less than 50 characters
-		return strlen($var) != 0 && strlen($var) < 50;
+		if (strlen($var) === 0) {
+			return 'No text given!';
+		} else if (strlen($var) > 50) {
+			return "The category name can't be over 50 characters long!";
+		}
 	}
 
-	return false;
+	return '';
 }
 
 /**
@@ -67,8 +74,6 @@ function startsWith($haystack, $needle) {
 	return !strncmp($haystack, $needle, strlen($needle));
 }
 
-// var_dump($_POST);
-
 $parsed = [];
 for ($i=0; $i < $columns; $i++) { 
 	$parsed[$i] = new Category();
@@ -83,22 +88,42 @@ foreach ($_POST as $key => $value) {
 	for ($i=0; $i < $columns; $i++) { 
 		if (startsWith($key, $i . '-cat')) {
 			// Category name
-			$parsed[$i]->name = $_POST[$key];
+			$error = validCategoryName($key);
+			// Empty string means it's okay, non-empty means bad
+			if (strlen($error) == 0) {
+				$parsed[$i]->name->value = $_POST[$key];
+			} else {
+				$parsed[$i]->name->error = $error;
+				$containsError = true;
+			}
 		} else if (startsWith($key, $i . '_')) {
 			// Either question or answer
+			// Get the row index
 			$index = substr($key, strpos($key, '_') + 1, 1);
 			if (strpos($key, 'question') !== false) {
 				// It's a question
-				$parsed[$i]->questions[$index] = $value;
+				$parsed[$i]->questions[$index] = new QAData($value, validQuestionAnswer($key));
+
+				// Check for an error
+				if (strlen($parsed[$i]->questions[$index]->error) != 0) {
+					$containsError = true;
+				}
 			} else if (strpos($key, 'answer') !== false) {
 				// It's an answer
-				$parsed[$i]->answers[$index] = $value;
+				$parsed[$i]->answers[$index] = new QADAta($value, validQuestionAnswer($key));
+
+				// Check for an error
+				if (strlen($parsed[$i]->answers[$index]->error) != 0) {
+					$containsError = true;
+				}
 			}
 		}
 	}
 }
 
 // Data is now parsed into logically organized categories
+// var_dump($parsed);
+// var_dump($containsError);
 ?>
 
 <!DOCTYPE html>
@@ -158,7 +183,7 @@ foreach ($_POST as $key => $value) {
 
 					$catName = 'Category ' . ($i + 1);
 					if (isset($parsed[$i]->name)) {
-						$catName = $parsed[$i]->name;
+						$catName = $parsed[$i]->name->value;
 					}
 
 					echo sprintf('<input type="text" name="%s-cat" class="category-name" value="%s">', $i, $catName);
@@ -170,13 +195,13 @@ foreach ($_POST as $key => $value) {
 
 						$answer = '';
 						if (isset($parsed[$i]->answers[$j])) {
-							$answer = htmlspecialchars($parsed[$i]->answers[$j]);
+							$answer = htmlspecialchars($parsed[$i]->answers[$j]->value);
 						}
 						echo sprintf('<label>Answer:</label><input value="%s" name="%s_%s-answer" type="text"><br>', $answer, $i, $j);
 
 						$question = '';
 						if (isset($parsed[$i]->questions[$j])) {
-							$question = htmlspecialchars($parsed[$i]->questions[$j]);
+							$question = htmlspecialchars($parsed[$i]->questions[$j]->value);
 						}
 						echo sprintf('<label>Question:</label><input value="%s" name="%s_%s-question" type="text"><br>', $question, $i, $j);
 
