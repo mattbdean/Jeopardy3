@@ -4,7 +4,7 @@ require 'classes/category.class.php';
 
 $categories = getConfigJson("categories");
 $columns = getConfigJson('constants')['categories'];
-$sumbitted = isset($_POST['submit']);
+$submitted = isset($_POST['submit']);
 $containsError = false;
 
 /*
@@ -91,46 +91,50 @@ $gameTitle = getBasicValue('game-title');
 $gameCreator = getBasicValue('game-creator');
 $gameCategory = getBasicValue('game-category');
 
-// Parse the POST data into a logical array of Category objects ($parsed)
-foreach ($_POST as $key => $value) {
-	for ($i=0; $i < $columns; $i++) { 
-		if (startsWith($key, $i . '-cat')) {
-			// Category name
-			$error = validCategoryName($key);
-			// Empty string means it's okay, non-empty means bad
-			if (strlen($error) == 0) {
-				$parsed[$i]->name->value = $_POST[$key];
-			} else {
-				$parsed[$i]->name->error = $error;
-				$containsError = true;
-			}
-		} else if (startsWith($key, $i . '_')) {
-			// Either question or answer
-			// Get the row index
-			$index = substr($key, strpos($key, '_') + 1, 1);
-			if (strpos($key, 'question') !== false) {
-				// It's a question
-				$parsed[$i]->questions[$index] = new QAData($value, validQuestionAnswer($key));
+if ($submitted) {
 
-				// Check for an error
-				if (strlen($parsed[$i]->questions[$index]->error) != 0) {
+	// Parse the POST data into a logical array of Category objects ($parsed)
+	foreach ($_POST as $key => $value) {
+		for ($i=0; $i < $columns; $i++) { 
+			if (startsWith($key, $i . '-cat')) {
+				// Category name
+				$error = validCategoryName($key);
+				// Empty string means it's okay, non-empty means bad
+				if (strlen($error) == 0) {
+					$parsed[$i]->name->value = $_POST[$key];
+				} else {
+					$parsed[$i]->name->error = $error;
 					$containsError = true;
 				}
-			} else if (strpos($key, 'answer') !== false) {
-				// It's an answer
-				$parsed[$i]->answers[$index] = new QADAta($value, validQuestionAnswer($key));
+			} else if (startsWith($key, $i . '_')) {
+			// Either question or answer
+			// Get the row index
+				$index = substr($key, strpos($key, '_') + 1, 1);
+				if (strpos($key, 'question') !== false) {
+				// It's a question
+					$parsed[$i]->questions[$index] = new QAData($value, validQuestionAnswer($key));
 
 				// Check for an error
-				if (strlen($parsed[$i]->answers[$index]->error) != 0) {
-					$containsError = true;
+					if (strlen($parsed[$i]->questions[$index]->error) != 0) {
+						$containsError = true;
+					}
+				} else if (strpos($key, 'answer') !== false) {
+				// It's an answer
+					$parsed[$i]->answers[$index] = new QADAta($value, validQuestionAnswer($key));
+
+				// Check for an error
+					if (strlen($parsed[$i]->answers[$index]->error) != 0) {
+						$containsError = true;
+					}
 				}
 			}
 		}
 	}
 }
 
+
 // Data is now parsed into logically organized categories
-// var_dump($parsed);
+var_dump($parsed);
 // var_dump($containsError);
 ?>
 
@@ -189,7 +193,7 @@ foreach ($_POST as $key => $value) {
 					echo '<section class="category-container">';
 
 					$catName = 'Category ' . ($i + 1);
-					if (isset($parsed[$i]->name)) {
+					if (strlen($parsed[$i]->name->value) != 0) {
 						$catName = $parsed[$i]->name->value;
 					}
 
