@@ -99,6 +99,9 @@ if ($submitted) {
 			if (startsWith($key, $i . '-cat')) {
 				// Category name
 				$error = validCategoryName($key);
+				if (!is_object($parsed[$i]->name)) {
+					$parsed[$i]->name = new QAData();
+				}
 				// Empty string means it's okay, non-empty means bad
 				if (strlen($error) == 0) {
 					$parsed[$i]->name->value = $_POST[$key];
@@ -147,6 +150,7 @@ if ($submitted) {
 	<script src="js/jquery-1.10.2.min.js"></script>
 	<script src="js/create_hide.js"></script>
 </head>
+<?php if ($containsError || !$submitted) { ?>
 <body>
 	<div id="content-wrapper">
 		<div id="header-wrapper">
@@ -190,13 +194,16 @@ if ($submitted) {
 					echo '<section class="category-container">';
 
 					$catName = 'Category ' . ($i + 1);
-					if (strlen($parsed[$i]->name->value) != 0) {
-						$catName = $parsed[$i]->name->value;
+					if (is_object($parsed[$i]->name)) {
+						if (strlen($parsed[$i]->name->value) != 0) {
+							$catName = $parsed[$i]->name->value;
+						} else if (strlen($parsed[$i]->name->error) != 0) {
+							displayError($parsed[$i]->name->error);
+						}
 					}
+					
 
-					if (strlen($parsed[$i]->name->error) != 0) {
-						displayError($parsed[$i]->name->error);
-					}
+					
 					echo sprintf('<input type="text" name="%s-cat" class="category-name" value="%s">', $i, $catName);
 					for ($j = 0; $j < 5; $j++) {
 						echo '<div class="qa-container-data" data-index="' . $j . '">';
@@ -211,10 +218,13 @@ if ($submitted) {
 							$answer = htmlspecialchars($parsed[$i]->answers[$j]->value);
 						}
 						// Check if there's an error
-						if (strlen($parsed[$i]->answers[$j]->error) != 0) {
-							displayError($parsed[$i]->answers[$j]->error);
+						if (isset($parsed[$i]->answers[$j]->error)) {
+							if (strlen($parsed[$i]->answers[$j]->error) != 0) {
+								displayError($parsed[$i]->answers[$j]->error);
+							}
 						}
-						echo sprintf('<label>Answer:</label><input value="%s" name="%s_%s-answer" type="text"><br>', $answer, $i, $j);
+						
+						echo sprintf('<label>Answer:</label><input value="Answer%s" name="%s_%s-answer" type="text"><br>', $answer, $i, $j);
 
 						// Display the question
 						$question = '';
@@ -223,10 +233,13 @@ if ($submitted) {
 							$question = htmlspecialchars($parsed[$i]->questions[$j]->value);
 						}
 						// Check if there's an error
-						if (strlen($parsed[$i]->questions[$j]->error) != 0) {
-							displayError($parsed[$i]->questions[$j]->error);
+						if (isset($parsed[$i]->questions[$j]->error)) {
+							if (strlen($parsed[$i]->questions[$j]->error) != 0) {
+								displayError($parsed[$i]->questions[$j]->error);
+							}
 						}
-						echo sprintf('<label>Question:</label><input value="%s" name="%s_%s-question" type="text"><br>', $question, $i, $j);
+						
+						echo sprintf('<label>Question:</label><input value="Question%s" name="%s_%s-question" type="text"><br>', $question, $i, $j);
 
 						// End qa-label-container
 						echo '</div>';
@@ -243,6 +256,96 @@ if ($submitted) {
 				<button id="create-game" name="submit">Create Game</button>
 			</div>
 		</form>
+	</div>
+</body>
+<?php } else { ?>
+
+<body>
+	<div class="">
+		<p>Please wait, I'm processing your game now...</p>
+
+		<?php
+		// Error free!
+		// Do some work in the DB
+		$hostname = 'localhost';
+		$username = 'jeopardy';
+		$passowrd = 'jeopardy';
+
+		try {
+			$dbh = new PDO("mysql:host=$hostname;dbname=jeopardy", $username, $passowrd);
+
+			$prepared = $dbh->prepare('INSERT INTO games (game_id, file_name, date_created, category) VALUES (:game_id, :file_name, :date_created, :category);');
+			$id = mt_rand(0, 1000000);
+			$gameFile = $id . '.xml';
+			$prepared->execute([
+				':game_id' => $id,
+				':file_name' => $gameFile,
+				':date_created' => date('Y-m-d H:i:s', time()),
+				':category' => $gameCategory
+			]);
+
+			// http://stackoverflow.com/a/60496/1275092
+			$dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+			$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+			// Close the db connection
+			$dbh = null;
+		} catch (PDOException $e) {
+			echo $e->getMessage();
+		}
+
+		// Generate the XML file
+
+		// Create an array that organizes the question/answer like the XML file would.
+		// For each category, there are 5 answer containers. The contain 2 elements,
+		// an answer, and a question.
+		$xmlReady = [];
+		for ($i = 0; $i < count($parsed); $i++) { 
+			$xmlReady[$i] = [];
+			for ($j = 0; $j < 5; $j++) {
+				// Represents the answerContainer element
+				$xmlReady[$i][$j] = [$parsed[$i]->answers[$j]->value, $parsed[$i]->questions[$j]->value];
+			}
+		}
+		var_dump($xmlReady);
+		var_dump($parsed);
+
+		// Prepare yourself. Messy DOM work is coming.
+		$xml = new DOMDocument();
+		$xmlRoot = $xml->appendChild($xml->createElement('jeopardy'));
+		for ($i = 0; $i < count($parsed); $i++) {
+			$category = $parsed[$i];
+
+			$xmlCategory = $xml->createElement('column');
+			$xmlCategory->setAttribute('name', $category->name->value);
+
+			// Iterate over each answerContainer
+			for ($j=0; $j < count($xmlReady[$i]); $j++) { 
+				$xmlAnswerContainer = $xml->createElement('answerContainer');
+				$xmlAnswer = $xml->createElement('answer');
+				$xmlAnswer->appendChild($xml->createTextNode($xmlReady[$i][$j][0]));
+				$xmlAnswerContainer->appendChild($xmlAnswer);
+
+				$xmlQuestion = $xml->createElement('question');
+				$xmlQuestion->appendChild($xml->createTextNode($xmlReady[$i][$j][1]));
+				$xmlAnswerContainer->appendChild($xmlQuestion);
+
+				$xmlCategory->appendChild($xmlAnswerContainer);
+			}
+
+			$xmlRoot->appendChild($xmlCategory);
+		}
+
+		for ($i=0; $i < 5; $i++) { 
+			echo '<br>';
+		}
+
+		// Enable this to see pretty XML. Disable to conserve disk space/read speeds
+		$xml->formatOutput = true;
+		$xml->save('games/' . $gameFile);
+		?>
+
+		<?php } ?>
 	</div>
 </body>
 </html>
