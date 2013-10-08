@@ -89,3 +89,7 @@ h1 {
 .red {
 	color: #fc4949;
 }
+
+.error-message-container {
+	background-color: #FF0000;
+}

@@ -74,6 +74,13 @@ function startsWith($haystack, $needle) {
 	return !strncmp($haystack, $needle, strlen($needle));
 }
 
+function displayError($message) {
+	echo '<div class="error-message-container centered">';
+	echo sprintf('<p>%s</p>', $message);
+	// End error-message-container
+	echo '</div>';
+}
+
 $parsed = [];
 for ($i=0; $i < $columns; $i++) { 
 	$parsed[$i] = new Category();
@@ -146,7 +153,6 @@ foreach ($_POST as $key => $value) {
 			require 'common/header.php';
 			?>
 		</div>
-		
 		<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
 			<section id="game-meta" class="centered">
 				<h1>Basic Info</h1>
@@ -193,15 +199,27 @@ foreach ($_POST as $key => $value) {
 						echo '<span class="qa-label-hint" style="display: none"></span></p>';
 						echo '<div class="qa-container">';
 
+						// Display the answer
 						$answer = '';
-						if (isset($parsed[$i]->answers[$j])) {
+						// Check if the value is set
+						if (isset($parsed[$i]->answers[$j]->value)) {
 							$answer = htmlspecialchars($parsed[$i]->answers[$j]->value);
+						}
+						// Check if there's an error
+						if (strlen($parsed[$i]->answers[$j]->error) != 0) {
+							displayError($parsed[$i]->answers[$j]->error);
 						}
 						echo sprintf('<label>Answer:</label><input value="%s" name="%s_%s-answer" type="text"><br>', $answer, $i, $j);
 
+						// Display the question
 						$question = '';
-						if (isset($parsed[$i]->questions[$j])) {
+						// Check if the value is set
+						if (isset($parsed[$i]->questions[$j]->value)) {
 							$question = htmlspecialchars($parsed[$i]->questions[$j]->value);
+						}
+						// Check if there's an error
+						if (strlen($parsed[$i]->questions[$j]->error) != 0) {
+							displayError($parsed[$i]->questions[$j]->error);
 						}
 						echo sprintf('<label>Question:</label><input value="%s" name="%s_%s-question" type="text"><br>', $question, $i, $j);
 
