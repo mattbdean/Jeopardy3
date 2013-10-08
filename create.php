@@ -75,7 +75,8 @@ function startsWith($haystack, $needle) {
 }
 
 function displayError($message) {
-	echo '<div class="error-message-container centered">';
+	echo '<div class="error-message-container">';
+	echo '<img class="error-icon" src="res/img/error.png">';
 	echo sprintf('<p>%s</p>', $message);
 	// End error-message-container
 	echo '</div>';
@@ -192,6 +193,9 @@ foreach ($_POST as $key => $value) {
 						$catName = $parsed[$i]->name->value;
 					}
 
+					if (strlen($parsed[$i]->name->error) != 0) {
+						displayError($parsed[$i]->name->error);
+					}
 					echo sprintf('<input type="text" name="%s-cat" class="category-name" value="%s">', $i, $catName);
 					for ($j = 0; $j < 5; $j++) {
 						echo '<div class="qa-container-data" data-index="' . $j . '">';

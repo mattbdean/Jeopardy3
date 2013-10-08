@@ -91,5 +91,22 @@ h1 {
 }
 
 .error-message-container {
-	background-color: #FF0000;
+	background-color: #FFD6D0;
+	color: #E0110B;
+	padding: 5px 10px;
+	min-height: 2em;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	border: 1px dashed #e0110b;
+	margin: 3px;
+}
+
+.error-message-container p {
+	margin: 0;
+}
+
+.error-icon {
+	float: left;
+	padding: 0 5px 5px 0;
 }
