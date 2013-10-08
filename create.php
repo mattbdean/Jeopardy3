@@ -132,10 +132,7 @@ if ($submitted) {
 	}
 }
 
-
 // Data is now parsed into logically organized categories
-var_dump($parsed);
-// var_dump($containsError);
 ?>
 
 <!DOCTYPE html>
