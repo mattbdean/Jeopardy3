@@ -23,18 +23,21 @@
 		</div>
 		<div id="navbar">
 			<?php
+			require 'classes/navbar_item.class.php';
+
 			$sampleTeams = [];
 			for ($i = 0; $i < 5; $i++) {
 				$sampleTeams[$i] = 'Team ' . ($i + 1);
 			}
-			$navbarItems = [
-			"Sample Game" => "play.php?" . http_build_query(["teams" => $sampleTeams, "game" => "sample"]),
-			"Create a Game" => "create.php",
-			"About" => "about.php"
-			];
+			$sampleURL = "play.php?" . http_build_query(["teams" => $sampleTeams, "game" => "sample"]);
+			$navbarItems = array(
+				new NavbarItem("Sample Game", "play.php?" . $sampleURL, true),
+				new NavbarItem("Create a Game", "create.php"),
+				new NavbarItem("About", "about.php")
+			);
 
-			foreach ($navbarItems as $name => $location) {
-				echo sprintf('<a class="navbar-item" href="%s">%s</a>', $location, $name);
+			foreach ($navbarItems as $item) {
+				echo sprintf('<a class="navbar-item" href="%s" %s>%s</a>', $item->location, $item->newTab ? 'target="_blank"' : '', $item->name);
 			}
 			?>
 		</div>
