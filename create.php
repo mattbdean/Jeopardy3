@@ -70,9 +70,9 @@ function getBasicValue($key) {
  * See: http://stackoverflow.com/a/834355/1275092
  */
 function startsWith($haystack, $needle) {
-	// 
 	return !strncmp($haystack, $needle, strlen($needle));
 }
+
 
 function displayError($message) {
 	echo '<div class="error-message-container">';
@@ -261,8 +261,8 @@ if ($submitted) {
 <?php } else { ?>
 
 <body>
-	<div class="">
-		<p>Please wait, I'm processing your game now...</p>
+	<div>
+		<p class="centered-text">Please wait, I'm processing your game now...</p>
 
 		<?php
 		// Error free!
@@ -274,14 +274,15 @@ if ($submitted) {
 		try {
 			$dbh = new PDO("mysql:host=$hostname;dbname=jeopardy", $username, $passowrd);
 
-			$prepared = $dbh->prepare('INSERT INTO games (game_id, file_name, date_created, category) VALUES (:game_id, :file_name, :date_created, :category);');
+			$prepared = $dbh->prepare('INSERT INTO games (game_id, file_name, date_created, category, game_name) VALUES (:game_id, :file_name, :date_created, :category, :game_name);');
 			$id = mt_rand(0, 1000000);
 			$gameFile = $id . '.xml';
 			$prepared->execute([
 				':game_id' => $id,
 				':file_name' => $gameFile,
 				':date_created' => date('Y-m-d H:i:s', time()),
-				':category' => $gameCategory
+				':category' => $gameCategory,
+				':game_name' => $gameTitle
 			]);
 
 			// http://stackoverflow.com/a/60496/1275092
