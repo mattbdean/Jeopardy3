@@ -261,8 +261,8 @@ if ($submitted) {
 <?php } else { ?>
 
 <body>
-	<div>
-		<p class="centered-text">Please wait, I'm processing your game now...</p>
+	<div class="centered-text">
+		<p>Please wait, I'm processing your game now...</p>
 
 		<?php
 		// Error free!
@@ -270,12 +270,11 @@ if ($submitted) {
 		$hostname = 'localhost';
 		$username = 'jeopardy';
 		$passowrd = 'jeopardy';
+		$id = mt_rand(0, 1000000);
 
 		try {
 			$dbh = new PDO("mysql:host=$hostname;dbname=jeopardy", $username, $passowrd);
-
 			$prepared = $dbh->prepare('INSERT INTO games (game_id, file_name, date_created, category, game_name) VALUES (:game_id, :file_name, :date_created, :category, :game_name);');
-			$id = mt_rand(0, 1000000);
 			$gameFile = $id . '.xml';
 			$prepared->execute([
 				':game_id' => $id,
@@ -308,8 +307,6 @@ if ($submitted) {
 				$xmlReady[$i][$j] = [$parsed[$i]->answers[$j]->value, $parsed[$i]->questions[$j]->value];
 			}
 		}
-		var_dump($xmlReady);
-		var_dump($parsed);
 
 		// Prepare yourself. Messy DOM work is coming.
 		$xml = new DOMDocument();
@@ -337,13 +334,13 @@ if ($submitted) {
 			$xmlRoot->appendChild($xmlCategory);
 		}
 
-		for ($i=0; $i < 5; $i++) { 
-			echo '<br>';
-		}
-
 		// Enable this to see pretty XML. Disable to conserve disk space/read speeds
 		$xml->formatOutput = true;
 		$xml->save('games/' . $gameFile);
+
+		$redirectURL = 'gameinfo.php?' . http_build_query(array('id' => $id));
+		echo sprintf('<p>Please click <a href=%s>here</a> if you are not automatically redirected</p>', $redirectURL);
+		header('Location: ' . $redirectURL);
 		?>
 
 		<?php } ?>
