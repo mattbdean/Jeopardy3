@@ -37,10 +37,13 @@ $(function() {
 		makeHint(answer, question, $hint);
 	});
 
-	$(".category-name").keypress(function(e) {
-		if (e.keyCode === 13) { // Enter
-			e.preventDefault(); // Prevent a new line
-			$(this).blur(); // Unfocus it
+	$('#game-data input[type="text"], #game-meta input[type="text"]').keyup(function() {
+		if ($(this).val().length === 0) {
+			// Now empty/invalid
+			$(this).addClass('error');
+		} else if ($(this).hasClass('error') && $(this).val().length !== 0) {
+			// Was empty/invalid before this, now isn't
+			$(this).removeClass('error');
 		}
 	});
 });

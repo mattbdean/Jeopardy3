@@ -82,31 +82,24 @@ img.expand-contract-icon-2 {
 }
 
 h1 {
-	font-weight: normal;
 	font-size: 35px;
 }
 
-.red {
-	color: #fc4949;
+.error {
+	background-color: #ffc993;
+	color: #E0110B;
 }
 
-.error-message-container {
-	background-color: #FFD6D0;
-	color: #E0110B;
-	padding: 5px 10px;
-	min-height: 2em;
+.error-container {
+	width: 960px;
+	margin: 30px auto 0 auto;
+	background-color: #ffc993;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
 	border: 1px dashed #e0110b;
-	margin: 3px;
 }
 
-.error-message-container p {
-	margin: 0;
-}
-
-.error-icon {
-	float: left;
-	padding: 0 5px 5px 0;
+.error-container p {
+	margin: 10px 15px;
 }

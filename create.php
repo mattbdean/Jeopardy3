@@ -7,15 +7,6 @@ $columns = getConfigJson('constants')['categories'];
 $submitted = isset($_POST['submit']);
 $containsError = false;
 
-/*
- * VALIDATION:
- * game-title: Less than 100 characters
- * game-creator: Between 4 and 35 characters (see http://stackoverflow.com/a/30509/1275092)
- * game-category: One of the categories in /cfg/categories.json
- * [0-5]_[0-5]-[answer/question]: Less than 500 characters
- * [0-5]-cat: Less than 50 characters
- */
-
 /**
  * Tests if a POST variable with a given key is set. If it is, it
  * returns if the length of the value is not 0 and less than 500
@@ -23,8 +14,8 @@ $containsError = false;
 function validQuestionAnswer($value) {
 	if (strlen($value) === 0) {
 		return 'No text given!';
-	} else if (strlen($value) > 500) {
-		return "This value can't be over 500 characters long!";
+	} else if (strlen($value) > 1000) {
+		return "This value can't be over 1000 characters long!";
 	}
 
 	return '';
@@ -34,15 +25,11 @@ function validQuestionAnswer($value) {
  * Tests if a POST variable with a given key is set. If it is, it
  * returns if the length of the value is not 0 and less than 50.
  */
-function validCategoryName($varName) {
-	if (isset($_POST[$varName])) {
-		$var = $_POST[$varName];
-
-		if (strlen($var) === 0) {
-			return 'No text given!';
-		} else if (strlen($var) > 50) {
-			return "The category name can't be over 50 characters long!";
-		}
+function validCategoryName($catName) {
+	if (strlen($catName) === 0) {
+		return 'No text given!';
+	} else if (strlen($catName) > 250) {
+		return "The category name can't be over 250 characters long!";
 	}
 
 	return '';
@@ -67,15 +54,6 @@ function getBasicValue($key) {
  */
 function startsWith($haystack, $needle) {
 	return !strncmp($haystack, $needle, strlen($needle));
-}
-
-
-function displayError($message) {
-	echo '<div class="error-message-container">';
-	echo '<img class="error-icon" src="res/img/error.png">';
-	echo sprintf('<p>%s</p>', $message);
-	// End error-message-container
-	echo '</div>';
 }
 
 $parsed = [];
@@ -159,6 +137,19 @@ if ($submitted) {
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	<script src="js/jquery-1.10.2.min.js"></script>
 	<script src="js/create_hide.js"></script>
+	<?php if ($containsError && !$submitted) {?>
+	<script>
+	$('#game-data input[type="text"], #game-meta input[type="text"]').keyup(function() {
+		if ($(this).val().length === 0) {
+			// Now empty/invalid
+			$(this).addClass('error');
+		} else if ($(this).hasClass('error') && $(this).val().length !== 0) {
+			// Was empty/invalid before this, now isn't
+			$(this).removeClass('error');
+		}
+	});
+	</script>
+	<?php } ?>
 </head>
 <?php if ($containsError || !$submitted) { ?>
 <body>
@@ -169,6 +160,17 @@ if ($submitted) {
 			require 'common/header.php';
 			?>
 		</div>
+		<?php if ($submitted && $containsError) { ?>
+		<div class="error error-container">
+			<p>Please review your game and check for any warnings. This message indicates some of the fields need to be corrected.</p>
+			<p>Some possible reasons for this message:</p>
+			<ul>
+				<li>Empty fields</li>
+				<li>Questions or answers longer than 1,000 characters</li>
+				<li>Category names longer than 250 characters</li>
+			</ul>
+		</div>
+		<?php } ?>
 		<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
 			<section id="game-meta" class="centered">
 				<h1>Basic Info</h1>
@@ -198,41 +200,43 @@ if ($submitted) {
 			<hr class="centered">
 			<div id="game-data" class="centered">
 				<h1>Questions and Answers</h1>
+				
 				<?php
 				ob_start();
 				for ($i = 0; $i < $columns; $i++) {
 					echo '<section class="category-container">';
 
 					$catName = 'Category ' . ($i + 1);
-					if (is_object($parsed[$i]->name)) {
-						if (strlen($parsed[$i]->name->value) != 0) {
-							$catName = $parsed[$i]->name->value;
-						} else if (strlen($parsed[$i]->name->error) != 0) {
-							displayError($parsed[$i]->name->error);
-						}
+					if (isset($parsed[$i]->name->value)) {
+						$catName = $parsed[$i]->name->value;
+					}
+					$error = false;
+					if (isset($parsed[$i]->name->error)) {
+						$error = strlen($parsed[$i]->name->error) > 0;
 					}
 					
-					echo sprintf('<input type="text" name="cat-%s-name" class="category-name" value="%s">', $i, $catName);
+					
+					echo sprintf('<input type="text" name="cat-%s-name" class="%s category-name" value="%s">', $i, $error ? 'error' : '', $catName);
 					for ($j = 0; $j < 5; $j++) {
 						echo '<div class="qa-container-data" data-index="' . $j . '">';
 						echo '<p class="qa-label">Answer for $' . (($j + 1) * 100) . ': ';
 						echo '<span class="qa-label-hint" style="display: none"></span></p>';
 						echo '<div class="qa-container">';
 
+						$error = false;
+						if (isset($parsed[$i]->answers[$j]->error)) {
+							if (strlen($parsed[$i]->answers[$j]->error) > 0) {
+								$error = true;
+							}
+						}
 						// Display the answer
 						$answer = '';
 						// Check if the value is set
 						if (isset($parsed[$i]->answers[$j]->value)) {
 							$answer = htmlspecialchars($parsed[$i]->answers[$j]->value);
 						}
-						// Check if there's an error
-						if (isset($parsed[$i]->answers[$j]->error)) {
-							if (strlen($parsed[$i]->answers[$j]->error) != 0) {
-								displayError($parsed[$i]->answers[$j]->error);
-							}
-						}
 						
-						echo sprintf('<label>Answer:</label><input value="%s" name="answers-%s[]" type="text"><br>', $answer, $i);
+						echo sprintf('<label>Answer:</label><input %s value="%s" name="answers-%s[]" type="text"><br>', $error ? 'class="error"' : '', $answer, $i);
 
 						// Display the question
 						$question = '';
@@ -240,14 +244,15 @@ if ($submitted) {
 						if (isset($parsed[$i]->questions[$j]->value)) {
 							$question = htmlspecialchars($parsed[$i]->questions[$j]->value);
 						}
-						// Check if there's an error
+
+						$error = false;
 						if (isset($parsed[$i]->questions[$j]->error)) {
-							if (strlen($parsed[$i]->questions[$j]->error) != 0) {
-								displayError($parsed[$i]->questions[$j]->error);
+							if (strlen($parsed[$i]->questions[$j]->error) > 0) {
+								$error = true;
 							}
 						}
 						
-						echo sprintf('<label>Question:</label><input value="%s" name="questions-%s[]" type="text"><br>', $question, $i, $j);
+						echo sprintf('<label>Question:</label><input %s value="%s" name="questions-%s[]" type="text"><br>', $error ? 'class="error"' : '', $question, $i, $j);
 
 						// End qa-label-container
 						echo '</div>';
