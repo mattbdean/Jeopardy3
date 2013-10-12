@@ -274,14 +274,15 @@ if ($submitted) {
 
 		try {
 			$dbh = new PDO("mysql:host=$hostname;dbname=jeopardy", $username, $passowrd);
-			$prepared = $dbh->prepare('INSERT INTO games (game_id, file_name, date_created, category, game_name) VALUES (:game_id, :file_name, :date_created, :category, :game_name);');
+			$prepared = $dbh->prepare('INSERT INTO games (game_id, file_name, date_created, category, game_name, creator_name) VALUES (:game_id, :file_name, :date_created, :category, :game_name, :creator_name);');
 			$gameFile = $id . '.xml';
 			$prepared->execute([
 				':game_id' => $id,
 				':file_name' => $gameFile,
 				':date_created' => date('Y-m-d H:i:s', time()),
 				':category' => $gameCategory,
-				':game_name' => $gameTitle
+				':game_name' => $gameTitle,
+				':creator_name' => $gameCreator
 			]);
 
 			// http://stackoverflow.com/a/60496/1275092
