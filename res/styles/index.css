@@ -86,3 +86,29 @@
 	background: #2E5481;
 	border: solid 1px #5c84c9;
 }
+
+.recent-game {
+	text-decoration: none;
+	color: #35478C;
+}
+
+.recent-game:hover {
+	text-decoration: underline;
+}
+
+.recent-game:visited {
+	color: #35478C;
+}
+
+#recent-games {
+	margin-top: 30px;
+	padding: 10px;
+	border: 1px dashed #35478C;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+}
+
+#recent-games h2 {
+	margin-top: 0;
+}

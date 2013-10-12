@@ -72,17 +72,7 @@ try {
 		<section id="stats-basics">
 			<h2>The Basics</h2>
 			<?php
-			// Desired effect: January<sup>22</sup>, 1998
-			// January 22
-			$dateFirst = $CREATED->format('F j');
-			// nd
-			$dateAppend = $CREATED->format('S');
-			// 1998
-			$dateYear = $CREATED->format(', Y');
-			// Time
-			$dateTime = $CREATED->format('g:i:s A');
-
-			echo '<p class="stat">Created ' . $dateFirst . '<sup>' . $dateAppend . '</sup>' . $dateYear . ', ' . $dateTime . '</p>';
+			echo '<p class="stat">Created ' . getDateString($CREATED, true, true) . '</p>';
 			?>
 			<p class="stat">Category: <?php echo CATEGORY ?></p>
 			<p class="stat">Creator: <?php echo CREATOR ?></p>
