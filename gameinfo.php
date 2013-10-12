@@ -1,6 +1,7 @@
 <?php
 if (!isset($_GET['id'])) {
-	// Temporary for now
+	// Temporary for now.
+	// Maybe when 'id' isn't set, display a list of games
 	header('Location: /');
 }
 
@@ -23,6 +24,10 @@ try {
 	// Close the db connection
 	$dbh = null;
 
+	if ($stmt->rowCount() === 0) {
+		// Game does not exist
+		die("I couldn't find that game, sorry!");
+	}
 	$data = $stmt->fetch();
 
 	$categoryLookup = array_flip(getConfigJson('categories'));
@@ -74,8 +79,10 @@ try {
 			$dateAppend = $CREATED->format('S');
 			// 1998
 			$dateYear = $CREATED->format(', Y');
+			// Time
+			$dateTime = $CREATED->format('g:i:s A');
 
-			echo '<p class="stat">Created ' . $dateFirst . '<sup>' . $dateAppend . '</sup>' . $dateYear . '</p>';
+			echo '<p class="stat">Created ' . $dateFirst . '<sup>' . $dateAppend . '</sup>' . $dateYear . ', ' . $dateTime . '</p>';
 			?>
 			<p class="stat">Category: <?php echo CATEGORY ?></p>
 			<p class="stat">Creator: <?php echo CREATOR ?></p>
