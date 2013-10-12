@@ -20,15 +20,11 @@ $containsError = false;
  * Tests if a POST variable with a given key is set. If it is, it
  * returns if the length of the value is not 0 and less than 500
  */
-function validQuestionAnswer($varName) {
-	if (isset($_POST[$varName])) {
-		$var = $_POST[$varName];
-
-		if (strlen($var) === 0) {
-			return 'No text given!';
-		} else if (strlen($var) > 500) {
-			return "The value can't be over 500 characters long!";
-		}
+function validQuestionAnswer($value) {
+	if (strlen($value) === 0) {
+		return 'No text given!';
+	} else if (strlen($value) > 500) {
+		return "This value can't be over 500 characters long!";
 	}
 
 	return '';
@@ -95,42 +91,57 @@ if ($submitted) {
 
 	// Parse the POST data into a logical array of Category objects ($parsed)
 	foreach ($_POST as $key => $value) {
-		for ($i=0; $i < $columns; $i++) { 
-			if (startsWith($key, $i . '-cat')) {
-				// Category name
-				$error = validCategoryName($key);
-				if (!is_object($parsed[$i]->name)) {
-					$parsed[$i]->name = new QAData();
-				}
-				// Empty string means it's okay, non-empty means bad
-				if (strlen($error) == 0) {
-					$parsed[$i]->name->value = $_POST[$key];
-				} else {
-					$parsed[$i]->name->error = $error;
-					$containsError = true;
-				}
-			} else if (startsWith($key, $i . '_')) {
-			// Either question or answer
-			// Get the row index
-				$index = substr($key, strpos($key, '_') + 1, 1);
-				if (strpos($key, 'question') !== false) {
-				// It's a question
-					$parsed[$i]->questions[$index] = new QAData($value, validQuestionAnswer($key));
+		if (preg_match("/cat-[0-5]-name/", $key)) {
+			// Is a category name
+			$catIndex = intval(substr($key, strlen('cat-'), 1));
+			$parsed[$catIndex]->name = new QAData($value);
+		} else if (preg_match("/questions-[0-5]/", $key)) {
+			// Question array
+			$catIndex = intval(substr($key, strlen('questions-'), 1));
 
-				// Check for an error
-					if (strlen($parsed[$i]->questions[$index]->error) != 0) {
-						$containsError = true;
-					}
-				} else if (strpos($key, 'answer') !== false) {
-				// It's an answer
-					$parsed[$i]->answers[$index] = new QADAta($value, validQuestionAnswer($key));
-
-				// Check for an error
-					if (strlen($parsed[$i]->answers[$index]->error) != 0) {
-						$containsError = true;
-					}
-				}
+			// For every question in the questions array
+			for ($i=0; $i < count($value); $i++) {
+				$parsed[$catIndex]->questions[$i] = new QAData($value[$i], validQuestionAnswer($value[$i]));
 			}
+		} else if (preg_match("/answers-[0-5]/", $key)) {
+			// Answers array
+
+			// For every answer in the answers array
+			for ($i=0; $i < count($value); $i++) {
+				$parsed[$catIndex]->answers[$i] = new QAData($value[$i], validQuestionAnswer($value[$i]));
+			}
+		}
+	}
+}
+
+// Check for errors
+foreach ($parsed as $category) {
+	if (strlen($category->name->error) > 0) {
+		$containsError = true;
+	}
+
+	// Stop searching if an error has been found
+	if ($containsError) break;
+
+	// Find all the errors in the answers
+	foreach ($category->answers as $qadata) {
+		// Stop searching if an error has been found
+		if ($containsError) break;
+		if (strlen($qadata->error) > 0) {
+			// Contains an error
+			$containsError = true;
+		}
+	}
+
+	// Stop searching if an error has been found
+	if ($containsError) break;
+	// Find all the errors in the questions
+	foreach ($category->questions as $qadata) {
+		// Stop searching if an error has been found
+		if ($containsError) break;
+		if (strlen($qadata->error) > 0) {
+			// Contains an error
+			$containsError = true;
 		}
 	}
 }
@@ -202,9 +213,7 @@ if ($submitted) {
 						}
 					}
 					
-
-					
-					echo sprintf('<input type="text" name="%s-cat" class="category-name" value="%s">', $i, $catName);
+					echo sprintf('<input type="text" name="cat-%s-name" class="category-name" value="%s">', $i, $catName);
 					for ($j = 0; $j < 5; $j++) {
 						echo '<div class="qa-container-data" data-index="' . $j . '">';
 						echo '<p class="qa-label">Answer for $' . (($j + 1) * 100) . ': ';
@@ -224,7 +233,7 @@ if ($submitted) {
 							}
 						}
 						
-						echo sprintf('<label>Answer:</label><input value="Answer%s" name="%s_%s-answer" type="text"><br>', $answer, $i, $j);
+						echo sprintf('<label>Answer:</label><input value="%s" name="answers-%s[]" type="text"><br>', $answer, $i);
 
 						// Display the question
 						$question = '';
@@ -239,7 +248,7 @@ if ($submitted) {
 							}
 						}
 						
-						echo sprintf('<label>Question:</label><input value="Question%s" name="%s_%s-question" type="text"><br>', $question, $i, $j);
+						echo sprintf('<label>Question:</label><input value="%s" name="questions-%s[]" type="text"><br>', $question, $i, $j);
 
 						// End qa-label-container
 						echo '</div>';
@@ -283,7 +292,7 @@ if ($submitted) {
 				':category' => $gameCategory,
 				':game_name' => $gameTitle,
 				':creator_name' => $gameCreator
-			]);
+				]);
 
 			// http://stackoverflow.com/a/60496/1275092
 			$dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
