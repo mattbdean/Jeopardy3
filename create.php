@@ -88,13 +88,12 @@ $gameCreator = getBasicValue('game-creator');
 $gameCategory = getBasicValue('game-category');
 
 if ($submitted) {
-
 	// Parse the POST data into a logical array of Category objects ($parsed)
 	foreach ($_POST as $key => $value) {
 		if (preg_match("/cat-[0-5]-name/", $key)) {
 			// Is a category name
 			$catIndex = intval(substr($key, strlen('cat-'), 1));
-			$parsed[$catIndex]->name = new QAData($value);
+			$parsed[$catIndex]->name = new QAData($value, validCategoryName($value));
 		} else if (preg_match("/questions-[0-5]/", $key)) {
 			// Question array
 			$catIndex = intval(substr($key, strlen('questions-'), 1));
@@ -112,36 +111,36 @@ if ($submitted) {
 			}
 		}
 	}
-}
 
-// Check for errors
-foreach ($parsed as $category) {
-	if (strlen($category->name->error) > 0) {
-		$containsError = true;
-	}
-
-	// Stop searching if an error has been found
-	if ($containsError) break;
-
-	// Find all the errors in the answers
-	foreach ($category->answers as $qadata) {
-		// Stop searching if an error has been found
-		if ($containsError) break;
-		if (strlen($qadata->error) > 0) {
-			// Contains an error
+	// Check for errors
+	foreach ($parsed as $category) {
+		if (strlen($category->name->error) > 0) {
 			$containsError = true;
 		}
-	}
 
-	// Stop searching if an error has been found
-	if ($containsError) break;
-	// Find all the errors in the questions
-	foreach ($category->questions as $qadata) {
 		// Stop searching if an error has been found
 		if ($containsError) break;
-		if (strlen($qadata->error) > 0) {
-			// Contains an error
-			$containsError = true;
+
+		// Find all the errors in the answers
+		foreach ($category->answers as $qadata) {
+			// Stop searching if an error has been found
+			if ($containsError) break;
+			if (strlen($qadata->error) > 0) {
+				// Contains an error
+				$containsError = true;
+			}
+		}
+
+		// Stop searching if an error has been found
+		if ($containsError) break;
+		// Find all the errors in the questions
+		foreach ($category->questions as $qadata) {
+			// Stop searching if an error has been found
+			if ($containsError) break;
+			if (strlen($qadata->error) > 0) {
+				// Contains an error
+				$containsError = true;
+			}
 		}
 	}
 }
