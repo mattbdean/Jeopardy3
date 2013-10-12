@@ -29,9 +29,9 @@
 			for ($i = 0; $i < 5; $i++) {
 				$sampleTeams[$i] = 'Team ' . ($i + 1);
 			}
-			$sampleURL = "play.php?" . http_build_query(["teams" => $sampleTeams, "game" => "sample"]);
+			$sampleURL = "play.php?" . http_build_query(["game" => "sample"]);
 			$navbarItems = array(
-				new NavbarItem("Sample Game", "play.php?" . $sampleURL, true),
+				new NavbarItem("Sample Game", $sampleURL, true),
 				new NavbarItem("Create a Game", "create.php"),
 				new NavbarItem("About", "about.php")
 			);

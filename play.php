@@ -1,7 +1,16 @@
 <?php
 require 'cfg/utils.php';
 define('ROW_COUNT', 5);
-define('GAME_ID', htmlspecialchars($_GET['game']));
+define('GAME_ID', $_GET['game']);
+
+if (GAME_ID == 'sample') {
+	$teams = [];
+	for ($i=0; $i < 5; $i++) { 
+		$teams[$i] = 'Team ' . ($i + 1);
+	}
+} else {
+	$teams = $_GET['teams'];
+}
 
 // Check if the game ID is "sample" or not equal to 0 (a non-integer string input)
 if (!($_GET['game'] === "sample" || intval($_GET['game']) != 0)) {
@@ -13,7 +22,6 @@ define('GAME_FILE', htmlspecialchars('games/' . $_GET['game'] . '.xml'));
 define('TOTAL', count(simplexml_load_file(GAME_FILE)->column) * ROW_COUNT);
 
 // Sanitize $teams
-$teams = $_GET['teams'];
 foreach ($teams as &$team) {
 	$team = htmlspecialchars($team);
 }
