@@ -21,11 +21,6 @@ if (!($_GET['game'] === "sample" || intval($_GET['game']) != 0)) {
 define('GAME_FILE', htmlspecialchars('games/' . $_GET['game'] . '.xml'));
 define('TOTAL', count(simplexml_load_file(GAME_FILE)->column) * ROW_COUNT);
 
-// Sanitize $teams
-foreach ($teams as &$team) {
-	$team = htmlspecialchars($team);
-}
-
 function makeGameFor($gameId, $teams) {
 
 	// Parse an XML file from games/${id}.xml
@@ -62,7 +57,7 @@ function makeGameFor($gameId, $teams) {
 	// Team names
 	echo '<tr>';
 	foreach ($teams as $team) {
-		echo '<th>' . $team . '</th>';
+		echo '<th>' . htmlspecialchars($team) . '</th>';
 	}
 	echo '</tr>';
 
