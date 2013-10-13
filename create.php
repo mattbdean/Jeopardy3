@@ -8,8 +8,8 @@ $submitted = isset($_POST['submit']);
 $containsError = false;
 
 /**
- * Tests if a POST variable with a given key is set. If it is, it
- * returns if the length of the value is not 0 and less than 500
+ * Returns the reason why this value is valid, or if it is valid,
+ * an empty string.
  */
 function validQuestionAnswer($value) {
 	if (strlen($value) === 0) {
@@ -22,8 +22,8 @@ function validQuestionAnswer($value) {
 }
 
 /**
- * Tests if a POST variable with a given key is set. If it is, it
- * returns if the length of the value is not 0 and less than 50.
+ * Returns the reason why this value is valid, or if it is valid,
+ * an empty string.
  */
 function validCategoryName($catName) {
 	if (strlen($catName) === 0) {
@@ -48,12 +48,27 @@ function getBasicValue($key) {
 	return '';
 }
 
-/**
- * Tests if a string starts with a certain string.
- * See: http://stackoverflow.com/a/834355/1275092
- */
-function startsWith($haystack, $needle) {
-	return !strncmp($haystack, $needle, strlen($needle));
+function categoryHasErrors($cat) {
+	if (strlen($cat->name->error) > 0) {
+		return true;
+	}
+
+	// Find all the errors in the answers
+	foreach ($cat->answers as $qadata) {
+		if (strlen($qadata->error) > 0) {
+			return true;
+		}
+	}
+
+	// Find all the errors in the questions
+	foreach ($cat->questions as $qadata) {
+		if (strlen($qadata->error) > 0) {
+			// Contains an error
+			return true;
+		}
+	}
+
+	return false;
 }
 
 $parsed = [];
@@ -92,33 +107,9 @@ if ($submitted) {
 
 	// Check for errors
 	foreach ($parsed as $category) {
-		if (strlen($category->name->error) > 0) {
+		if (categoryHasErrors($category)) {
 			$containsError = true;
-		}
-
-		// Stop searching if an error has been found
-		if ($containsError) break;
-
-		// Find all the errors in the answers
-		foreach ($category->answers as $qadata) {
-			// Stop searching if an error has been found
-			if ($containsError) break;
-			if (strlen($qadata->error) > 0) {
-				// Contains an error
-				$containsError = true;
-			}
-		}
-
-		// Stop searching if an error has been found
-		if ($containsError) break;
-		// Find all the errors in the questions
-		foreach ($category->questions as $qadata) {
-			// Stop searching if an error has been found
-			if ($containsError) break;
-			if (strlen($qadata->error) > 0) {
-				// Contains an error
-				$containsError = true;
-			}
+			break;
 		}
 	}
 }
@@ -137,19 +128,6 @@ if ($submitted) {
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	<script src="js/jquery-1.10.2.min.js"></script>
 	<script src="js/create_hide.js"></script>
-	<?php if ($containsError && !$submitted) {?>
-	<script>
-	$('#game-data input[type="text"], #game-meta input[type="text"]').keyup(function() {
-		if ($(this).val().length === 0) {
-			// Now empty/invalid
-			$(this).addClass('error');
-		} else if ($(this).hasClass('error') && $(this).val().length !== 0) {
-			// Was empty/invalid before this, now isn't
-			$(this).removeClass('error');
-		}
-	});
-	</script>
-	<?php } ?>
 </head>
 <?php if ($containsError || !$submitted) { ?>
 <body>
@@ -197,7 +175,6 @@ if ($submitted) {
 					?>
 				</select><br>
 			</section>
-			<hr class="centered">
 			<div id="game-data" class="centered">
 				<h1>Questions and Answers</h1>
 				
@@ -206,7 +183,7 @@ if ($submitted) {
 				for ($i = 0; $i < $columns; $i++) {
 					echo '<section class="category-container">';
 
-					$catName = 'Category ' . ($i + 1);
+					$catName = '';
 					if (isset($parsed[$i]->name->value)) {
 						$catName = $parsed[$i]->name->value;
 					}
@@ -215,13 +192,32 @@ if ($submitted) {
 						$error = strlen($parsed[$i]->name->error) > 0;
 					}
 					
-					
-					echo sprintf('<input type="text" name="cat-%s-name" class="%s category-name" value="%s">', $i, $error ? 'error' : '', $catName);
+					$hideAtRender = false;
+					$catHasErrors = $submitted ? categoryHasErrors($parsed[$i]) : false;
+					if ($submitted) {
+						if (!$catHasErrors) {
+							$hideAtRender = true;
+						}
+					} else {
+						// When the page is first loaded hide everything except the first category
+						$hideAtRender = $i !== 0;
+					}
+
+					echo '<div class="category-header">';
+					echo sprintf('<img class="expand-contract-icon" src="res/img/%s.png">', $hideAtRender ? 'collapse' : 'expand');
+					echo sprintf('<label class="category-name-label">Category %s: </label><input type="text" name="cat-%s-name" class="%s category-name" value="%s">', $i + 1, $i, $error ? 'error' : '', $catName);
+					if (!$catHasErrors && $submitted) {
+						echo '<img class="icon valid-category-icon" src="res/img/check.png">';
+					};
+					// End category-header
+					echo '</div>';
+
+					echo sprintf('<div class="minimizable-content" %s>', $hideAtRender ? 'style="display: none;"' : '');
 					for ($j = 0; $j < 5; $j++) {
-						echo '<div class="qa-container-data" data-index="' . $j . '">';
-						echo '<p class="qa-label">Answer for $' . (($j + 1) * 100) . ': ';
+						echo '<div class="qa-container-data">';
+						echo '<p>For $' . (($j + 1) * 100) . ': ';
 						echo '<span class="qa-label-hint" style="display: none"></span></p>';
-						echo '<div class="qa-container">';
+						echo '<ul class="qa-container">';
 
 						$error = false;
 						if (isset($parsed[$i]->answers[$j]->error)) {
@@ -236,7 +232,7 @@ if ($submitted) {
 							$answer = htmlspecialchars($parsed[$i]->answers[$j]->value);
 						}
 						
-						echo sprintf('<label>Answer:</label><input %s value="%s" name="answers-%s[]" type="text"><br>', $error ? 'class="error"' : '', $answer, $i);
+						echo sprintf('<li><label class="qa-label">Answer:</label><input class="%s qa-input" value="%s" name="answers-%s[]" type="text">', $error ? 'error' : '', $answer, $i);
 
 						// Display the question
 						$question = '';
@@ -252,13 +248,15 @@ if ($submitted) {
 							}
 						}
 						
-						echo sprintf('<label>Question:</label><input %s value="%s" name="questions-%s[]" type="text"><br>', $error ? 'class="error"' : '', $question, $i, $j);
+						echo sprintf('<li><label class="qa-label">Question:</label><input class="%s qa-input" value="%s" name="questions-%s[]" type="text"><br>', $error ? 'error' : '', $question, $i, $j);
 
 						// End qa-label-container
-						echo '</div>';
+						echo '</ul>';
 						// End qa-container
 						echo '</div>';
 					}
+					// End minimizable-content
+					echo '</div>';
 					// End category-container
 					echo '</section>';
 				}

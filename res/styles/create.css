@@ -4,65 +4,42 @@
 	margin-bottom: 200px;
 }
 
-.qa-label {
-	margin: 10px 0 0 30px;
-	cursor: default;
-
-	transition-duration: 0.1s;
-	-webkit-transition-duration: 0.1s; /*Safari*/
-
-	-webkit-user-select: none;  /* Chrome all / Safari all */
-	-moz-user-select: none;     /* Firefox all */
-	-ms-user-select: none;      /* IE 10+ */
-	-o-user-select: none;
-	user-select: none;    
-}
-
-.qa-label:hover {
-	background-color: #edf7ff;
-}
-
 .qa-container {
-	padding-left: 80px;
+	padding-left: 20px;
+	margin: 10px 0 5px 0;
+	list-style-type: none;
 }
 
-.qa-label-hint {
-	font-style: italic;
-	font-size: 11px;
-	color: #7a7a7a;
+.qa-container-data {
+	padding-left: 60px;
+}
+
+.qa-container-data p {
+	margin: 0;	
+}
+
+.category-name, .category-name-label {
+	font-size: 24px;
 }
 
 .category-name {
 	margin: 10px 0 5px 0;
-	font-size: 24px;
 }
 
-img.expand-contract-icon {
-	width: 16px;
-	height: 16px;
-	display: inline;
-	vertical-align: bottom;
-	padding-right: 5px;
-	float: left;
-	position: relative;
-	top: 8px;
+.category-name-label {
+	margin: 30px 0 5px 0;
 }
 
-img.expand-contract-icon-2 {
-	top: 7px;
-	left: 40px;
-}
-
-.category-container label {
+.qa-label {
 	width: 10%;
 	text-align: right;
 	float: left;
+	margin-right: 5px;
 }
 
-.category-container input[type="text"]:not(.category-name) {
-	width: 85%;
+.qa-input {
+	width: 65%;
 	text-align: left;
-	float: right;
 }
 
 #game-meta {
@@ -102,4 +79,22 @@ h1 {
 
 .error-container p {
 	margin: 10px 15px;
+}
+
+.icon {
+	width: 20px;
+	height: 20px;
+	vertical-align: middle;
+}
+
+.valid-category-icon {
+	width: 40px;
+	height: 40px;
+}
+
+.expand-contract-icon {
+	position: relative;
+	top: 2px;
+
+	cursor: pointer;
 }
