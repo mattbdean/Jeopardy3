@@ -2,6 +2,7 @@ table.gameboard {
 	background-color: #101a7c;
 	table-layout: fixed;
 	border-collapse: collapse;
+	width: 960px;
 }
 
 table.gameboard th {
