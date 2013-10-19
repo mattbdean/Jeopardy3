@@ -37,7 +37,7 @@ require 'cfg/utils.php';
 			$navbarItems = array(
 				new NavbarItem("Sample Game", $sampleURL, true),
 				new NavbarItem("Create a Game", "create.php"),
-				new NavbarItem("About", "about.php")
+				new NavbarItem("Find a Game", "find.php")
 				);
 
 			foreach ($navbarItems as $item) {
@@ -45,8 +45,12 @@ require 'cfg/utils.php';
 			}
 			?>
 		</div>
-
-		<div id="recent-games" class="centered">
+		<section class="index-centered">
+		<h2>About</h2>
+		<p>Classroom Jeopardy is a game designed to be played in a classroom environment. It's goal is save teachers' time
+			making their own Powerpoint Jeopardy games.</p><p><b>It's free to use and always will be. That's a promise.</b></p>
+		</section>
+		<div id="recent-games" class="index-centered">
 			<h2>Recent games</h2>
 			<?php
 			try {

@@ -112,3 +112,8 @@
 #recent-games h2 {
 	margin-top: 0;
 }
+
+.index-centered {
+	width: 600px;
+	margin: 50px auto;
+}
